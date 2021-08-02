@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserWorkingDate::class);
     }
+
+    public function getFullNameAttribute(): string
+    {
+        return implode(' ', array_filter([$this->first_name, $this->last_name]));
+    }
 }
