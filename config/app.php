@@ -166,7 +166,6 @@ return [
          * Package Service Providers...
          */
         Feadbox\Tabler\TablerServiceProvider::class,
-        Feadbox\Form\FormServiceProvider::class,
 
         /*
          * Application Service Providers...
