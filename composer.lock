@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70efe788174ec40e3dafc3c04905bd94",
+    "content-hash": "5a6f8abeafbd7b3d607b900494a57574",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -577,6 +577,84 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "feadbox/laravel-form-components",
+            "version": "2.5.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/feadbox/laravel-form-components.git",
+                "reference": "9ddb25b8fd660f06659cfb95834aa81282d8f8f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/feadbox/laravel-form-components/zipball/9ddb25b8fd660f06659cfb95834aa81282d8f8f6",
+                "reference": "9ddb25b8fd660f06659cfb95834aa81282d8f8f6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.22.4 || ^8.0",
+                "php": "^7.4 || ^8.0",
+                "symfony/http-foundation": "^5.1.2"
+            },
+            "require-dev": {
+                "livewire/livewire": "^2.0",
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench-browser-kit": "^5.1 || ^6.0",
+                "phpunit/phpunit": "^8.5 || ^9.0",
+                "spatie/laravel-translatable": "^4.4",
+                "symfony/dom-crawler": "^5.1.14"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ProtoneMedia\\LaravelFormComponents\\Support\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "ProtoneMedia\\LaravelFormComponents\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pascal Baljet",
+                    "email": "pascal@protone.media",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Blade components to rapidly build forms with Tailwind CSS Custom Forms and Bootstrap 4.",
+            "homepage": "https://github.com/protonemedia/laravel-form-components",
+            "keywords": [
+                "Forms",
+                "bootstrap",
+                "bootstrap4",
+                "form",
+                "form-builder",
+                "form-components",
+                "laravel",
+                "laravel-form-builder",
+                "laravel-form-components",
+                "protonemedia",
+                "tailwind",
+                "tailwindcss"
+            ],
+            "support": {
+                "source": "https://github.com/feadbox/laravel-form-components/tree/2.5.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/pascalbaljet",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-08-03T14:23:58+00:00"
         },
         {
             "name": "fideloper/proxy",

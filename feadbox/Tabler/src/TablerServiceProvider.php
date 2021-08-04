@@ -27,7 +27,7 @@ class TablerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../resources/views' => resource_path('views/vendor/tabler'),
-            ], 'tabler:views');
+            ], 'tabler-views');
         }
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'tabler');

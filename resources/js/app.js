@@ -1,2 +1,2 @@
 require('./bootstrap');
-require('@tabler/core');
+require('./tabler');

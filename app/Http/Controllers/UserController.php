@@ -8,10 +8,17 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
+        $users = User::query()
+            ->where(function ($query) use ($request) {
+                filled($request->q) ? $query->search($request->q) : $query->stillWorking();
+            })
+            ->oldest('first_name')
+            ->paginate();
+
         return view('users.index', [
-            'users' => User::oldest('first_name')->paginate(),
+            'users' => $users,
         ]);
     }
 
@@ -36,15 +43,15 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(User $user): View
     {
-        //
+        $months = now()->diffInDays($user->currentWorkingDate->started_at);
+
+        for ($i = 0; $i < ceil($months / 30); $i++) {
+            $dates[] = now()->month(now()->month - $i);
+        }
+
+        return view('users.show', compact('user', 'dates'));
     }
 
     /**

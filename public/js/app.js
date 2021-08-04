@@ -9997,7 +9997,7 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! @tabler/core */ "./node_modules/@tabler/core/dist/js/tabler.js");
+__webpack_require__(/*! ./tabler */ "./resources/js/tabler.js");
 
 /***/ }),
 
@@ -10029,6 +10029,46 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/tabler.js":
+/*!********************************!*\
+  !*** ./resources/js/tabler.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+__webpack_require__(/*! @tabler/core */ "./node_modules/@tabler/core/dist/js/tabler.js");
+
+{
+  document.addEventListener('click', function (e) {
+    if (!e) return;
+    {
+      var path = e.path || e.composedPath && e.composedPath();
+
+      if (['A', 'BUTTON'].includes(path[0].nodeName)) {
+        return;
+      }
+
+      path.forEach(function (dom) {
+        if (dom.nodeName === 'TR' && dom.hasAttribute('data-url')) {
+          window.location.href = dom.getAttribute('data-url');
+          return;
+        }
+      });
+    }
+    {
+      if (e.target.hasAttribute('step-one')) {
+        e.preventDefault();
+        var stepTwo = e.target.closest('[two-step]').querySelector('[step-two]');
+        stepTwo.classList.add('animate-pop');
+        stepTwo.removeAttribute('step-two');
+        e.target.remove();
+        return;
+      }
+    }
+  });
+}
 
 /***/ }),
 

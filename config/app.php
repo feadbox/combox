@@ -166,6 +166,8 @@ return [
          * Package Service Providers...
          */
         Feadbox\Tabler\TablerServiceProvider::class,
+        Feadbox\Settings\SettingsServiceProvider::class,
+        Feadbox\Activities\ActivityServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +231,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+
+        /**
+         * @TODO: Discover yaptıktan sonra bunu sil.
+         */
+        'Money' => \Feadbox\Support\Components\Money::class,
 
     ],
 

@@ -26,12 +26,10 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <a href="#" class="dropdown-item">Set status</a>
-                        <a href="#" class="dropdown-item">Profile & account</a>
-                        <a href="#" class="dropdown-item">Feedback</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">Settings</a>
-                        <a href="#" class="dropdown-item">Logout</a>
+                        <form action="#" method="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item">Oturumu kapat</button>
+                        </form>
                     </div>
                 </div>
             </x-slot>

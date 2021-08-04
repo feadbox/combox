@@ -18,21 +18,25 @@
                                 <tr>
                                     <th>Çalışan</th>
                                     <th>Telefon numarası</th>
+                                    <th>Çalışıyor</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
-                                    <tr>
-                                        <td>
-                                            <a href="{{ route('users.show', $user) }}">{{ $user->full_name }}</a>
+                                    <tr data-url="{{ $route = route('users.show', $user) }}">
+                                        <td class="has-link">
+                                            <a href="{{ $route }}">{{ $user->full_name }}</a>
                                         </td>
                                         <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->isStillWorking() ? 'Evet' : 'Hayır' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-tabler::table>
                     </div>
-                    <x-tabler::paginate :links="$users->links()" />
+                    <x-tabler::paginate>
+                        {{ $users->links() }}
+                    </x-tabler::paginate>
                 </div>
             </div>
         </div>

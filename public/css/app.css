@@ -17340,3 +17340,15 @@ Antialiasing
     border-color: #dadcde;
   }
 }
+tr[data-url] {
+  cursor: pointer;
+}
+
+td.has-link {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+td.has-link > a {
+  display: block;
+  padding: 0.5rem 0;
+}
