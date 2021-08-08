@@ -1,6 +1,6 @@
-<button {!! $attributes->merge([
+<button {{ $attributes->merge([
     'class' => 'btn btn-primary',
     'type' => 'submit'
-]) !!}>
-    {!! trim($slot) ?: __('Submit') !!}
+]) }}>
+    {{ $slot->isEmpty() ? __('Save') : $slot }}
 </button>

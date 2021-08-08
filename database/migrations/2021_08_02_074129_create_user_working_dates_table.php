@@ -16,8 +16,8 @@ class CreateUserWorkingDatesTable extends Migration
         Schema::create('user_working_dates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->timestamp('started_at')->nullable();
-            $table->timestamp('ended_at')->nullable();
+            $table->date('started_at');
+            $table->date('ended_at')->nullable();
             $table->timestamps();
         });
     }

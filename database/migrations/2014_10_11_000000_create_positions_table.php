@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserVacationsTable extends Migration
+class CreatePositionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateUserVacationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_vacations', function (Blueprint $table) {
+        Schema::create('positions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->date('started_at');
-            $table->date('ended_at')->nullable();
-            $table->integer('reason');
+            $table->string('name');
+            $table->bigInteger('default_price');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateUserVacationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_vacations');
+        Schema::dropIfExists('positions');
     }
 }

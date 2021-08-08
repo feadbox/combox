@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Feadbox\Support\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,8 @@ class UserSalary extends Model
     ];
 
     protected $casts = [
-        'started_at' => 'datetime',
+        'started_at' => 'date',
+        'price' => MoneyCast::class,
     ];
 
     public function user(): BelongsTo

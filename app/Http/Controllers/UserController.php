@@ -2,7 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Eloquent\Activities\UserBranchSavedActivity;
+use App\Eloquent\Activities\UserCreatedActivity;
+use App\Eloquent\Activities\UserPositionSavedActivity;
+use App\Eloquent\Activities\UserSalarySavedActivity;
+use App\Eloquent\Activities\UserWorkingStartedActivity;
+use App\Http\Requests\StoreUserRequest;
+use App\Models\Branch;
+use App\Models\Position;
 use App\Models\User;
+use App\Services\UserWorkingDateService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,67 +31,64 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('users.create', [
+            'branches' => Branch::oldest('name')->pluck('name', 'id'),
+            'positions' => Position::query()
+                ->select('id', 'name', 'default_price')
+                ->oldest('name')
+                ->get()
+                ->mapWithKeys(function ($position) {
+                    return [$position->id => "{$position->name} ($position->default_price)"];
+                }),
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $position = Position::select('id', 'name')->find($request->position);
+        $branch = Branch::select('id', 'name')->find($request->branch);
+
+        $user = new User($request->only(['first_name', 'last_name', 'email', 'phone']));
+        $user->position()->associate($position);
+        $user->branch()->associate($branch);
+        $user->save();
+
+        $workingDate = $user->workingDates()->create(['started_at' => $request->started_at]);
+
+        $salary = $user->salaries()->create([
+            'price' => $request->salary,
+            'started_at' => $request->started_at,
+        ]);
+
+        $user->activity(new UserCreatedActivity);
+        $user->activity(new UserBranchSavedActivity($branch));
+        $user->activity(new UserPositionSavedActivity($position));
+        $user->activity(new UserSalarySavedActivity($salary));
+        $user->activity(new UserWorkingStartedActivity($workingDate));
+
+        return redirect()->route('users.show', $user);
     }
 
-    public function show(User $user): View
+    public function show(User $user, UserWorkingDateService $service): View
     {
-        $months = now()->diffInDays($user->currentWorkingDate->started_at);
-
-        for ($i = 0; $i < ceil($months / 30); $i++) {
-            $dates[] = now()->month(now()->month - $i);
-        }
-
-        return view('users.show', compact('user', 'dates'));
+        return view('users.show', [
+            'user' => $user,
+            'period' => $service->period($user),
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

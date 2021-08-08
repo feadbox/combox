@@ -2,46 +2,37 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
-                <x-tabler::page-header title="Çalışanlar">
+                <x-tabler::page-header title="Şubeler">
                     <x-slot name="actions">
                         <div class="btn-list">
-                            <a href="{{ route('users.create') }}" class="btn">Çalışan ekle</a>
+                            <a href="{{ route('branches.create') }}" class="btn">Şube oluştur</a>
                         </div>
                     </x-slot>
                 </x-tabler::page-header>
                 <div class="page-body">
                     <div class="card card-table">
                         <div class="card-header">
-                            <div class="w-100">
-                                <div class="text-muted mb-2">
-                                    <strong>{{ $users->total() }}</strong> kayıtlı çalışan
-                                </div>
-                                <x-tabler::table-search />
-                            </div>
+                            <x-tabler::table-search />
                         </div>
                         <x-tabler::table>
                             <thead>
                                 <tr>
-                                    <th>Çalışan</th>
-                                    <th>Telefon numarası</th>
-                                    <th>Çalışıyor</th>
+                                    <th>Şube</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
-                                    <tr data-url="{{ $route = route('users.show', $user) }}">
+                                @foreach ($branches as $branch)
+                                    <tr data-url="{{ $route = route('branches.edit', $branch) }}">
                                         <td class="has-link">
-                                            <a href="{{ $route }}">{{ $user->full_name }}</a>
+                                            <a href="{{ $route }}">{{ $branch->name }}</a>
                                         </td>
-                                        <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->isStillWorking() ? 'Evet' : 'Hayır' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-tabler::table>
                     </div>
                     <x-tabler::paginate>
-                        {{ $users->links() }}
+                        {{ $branches->links() }}
                     </x-tabler::paginate>
                 </div>
             </div>

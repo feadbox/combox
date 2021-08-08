@@ -18,7 +18,7 @@
             $isActive ? 'active' : null,
             $hasChild ? 'dropdown-toggle' : null,
         ]),
-        'href' => $route,
+        'href' => $route ?? '#',
     ]);
 
     if ($hasChild) {

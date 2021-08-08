@@ -21,8 +21,8 @@
                         aria-label="Open user menu">
                         <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
                         <div class="d-none d-xl-block ps-2">
-                            <div>Paweł Kuna</div>
-                            <div class="mt-1 small text-muted">UI Designer</div>
+                            <div>Davut Kember</div>
+                            <div class="mt-1 small text-muted">Sorumlu</div>
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -49,6 +49,21 @@
                     route-is="users.*"
                     icon="users"
                 />
+                <x-tabler::nav-item
+                    label="Ayarlar"
+                    :route-is="['branches.*', 'positions.*']"
+                    icon="settings"
+                    has-child
+                >
+                    <a href="{{ route('branches.index') }}" class="dropdown-item">
+                        <x-tabler-apps class="dropdown-item-icon" />
+                        <span>Şubeler</span>
+                    </a>
+                    <a href="{{ route('positions.index') }}" class="dropdown-item">
+                        <x-tabler-apps class="dropdown-item-icon" />
+                        <span>Pozisyonlar</span>
+                    </a>
+                </x-tabler::nav-item>
             </x-slot>
         </x-tabler::app-navbar>
 
