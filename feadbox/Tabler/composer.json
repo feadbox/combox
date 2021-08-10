@@ -1,0 +1,16 @@
+{
+    "name": "feadbox/laravel-tabler",
+    "description": "Tabler.io for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davut Kember",
+            "email": "davutkmbr@gmail.com"
+        }
+    ],
+    "require": {
+        "ryangjchandler/blade-tabler-icons": "^1.1",
+        "feadbox/laravel-form-components": "^2.5"
+    }
+}

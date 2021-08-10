@@ -76,6 +76,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr class="mt-0 mb-3">
                         <x-form-submit />
                     </form>
                 </div>
