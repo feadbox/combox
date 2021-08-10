@@ -17,7 +17,8 @@ class CreateUserPaymentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
-            $table->timestamp('payment_at')->nullable();
+            $table->integer('type');
+            $table->date('payment_date');
             $table->timestamps();
         });
     }

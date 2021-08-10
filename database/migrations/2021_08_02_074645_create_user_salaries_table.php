@@ -17,7 +17,7 @@ class CreateUserSalariesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
-            $table->date('started_at');
+            $table->date('start');
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,5 @@ Route::resource('users', UserController::class);
 Route::resource('positions', PositionController::class)->except('show');
 
 Route::resource('branches', BranchController::class)->except('show');
+
+Route::resource('salaries', SalaryController::class);

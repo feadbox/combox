@@ -47,7 +47,7 @@
                                         <x-form-input
                                             label="İşe başlama tarihi"
                                             type="date"
-                                            name="started_at"
+                                            name="start"
                                             :default="now()->toDateString()"
                                             required
                                         />

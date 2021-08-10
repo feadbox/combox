@@ -13,14 +13,14 @@ class UserVacation extends Model
     use HasFactory, CastsEnums;
 
     protected $fillable = [
-        'started_at',
-        'ended_at',
+        'start',
+        'end',
         'reason',
     ];
 
     protected $casts = [
-        'started_at' => 'date',
-        'ended_at' => 'date',
+        'start' => 'date',
+        'end' => 'date',
         'reason' => VacationReasonEnum::class,
     ];
 

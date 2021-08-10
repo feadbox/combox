@@ -50,13 +50,24 @@
                     icon="users"
                 />
                 <x-tabler::nav-item
+                    label="Ödemeler"
+                    :route-is="['salaries.*']"
+                    icon="cash"
+                    has-child
+                >
+                    <a href="{{ route('salaries.index') }}" class="dropdown-item">
+                        <x-tabler-coin class="dropdown-item-icon" />
+                        <span>Maaşlar</span>
+                    </a>
+                </x-tabler::nav-item>
+                <x-tabler::nav-item
                     label="Ayarlar"
                     :route-is="['branches.*', 'positions.*']"
                     icon="settings"
                     has-child
                 >
                     <a href="{{ route('branches.index') }}" class="dropdown-item">
-                        <x-tabler-apps class="dropdown-item-icon" />
+                        <x-tabler-building-store class="dropdown-item-icon" />
                         <span>Şubeler</span>
                     </a>
                     <a href="{{ route('positions.index') }}" class="dropdown-item">

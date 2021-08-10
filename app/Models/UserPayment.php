@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Eloquent\Enums\PaymentTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,11 +13,13 @@ class UserPayment extends Model
 
     protected $fillable = [
         'price',
-        'payment_at',
+        'type',
+        'payment_date',
     ];
 
     protected $casts = [
-        'payment_at' => 'datetime',
+        'type' => PaymentTypeEnum::class,
+        'payment_date' => 'datetime',
     ];
 
     public function user(): BelongsTo

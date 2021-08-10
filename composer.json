@@ -15,7 +15,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
-        "ryangjchandler/blade-tabler-icons": "^1.1"
+        "ryangjchandler/blade-tabler-icons": "^1.1",
+        "spatie/period": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

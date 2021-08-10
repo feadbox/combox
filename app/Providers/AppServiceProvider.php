@@ -26,21 +26,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        App::setLocale(setting('app.locale'));
-        date_default_timezone_set(setting('app.timezone'));
+        if ($locale = setting('app.locale')) {
+            App::setLocale($locale);
+        }
+
+        if ($timezone = setting('app.timezone')) {
+            date_default_timezone_set($timezone);
+        }
 
         Schema::defaultStringLength(191);
-
-        Collection::macro('year', function ($key, $year) {
-            return $this->filter(function ($value) use ($key, $year) {
-                return $value->{$key}->year === $year;
-            });
-        });
-
-        Collection::macro('month', function ($key, $month) {
-            return $this->filter(function ($value) use ($key, $month) {
-                return $value->{$key}->month === $month;
-            });
-        });
     }
 }

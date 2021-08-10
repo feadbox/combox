@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a43af32324832ec655053cd6133e95f9",
+    "content-hash": "35973bf2910a31b8dd7a7109e8766bb9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3390,6 +3390,59 @@
                 "source": "https://github.com/ryangjchandler/blade-tabler-icons/tree/v1.1.0"
             },
             "time": "2021-05-10T14:50:09+00:00"
+        },
+        {
+            "name": "spatie/period",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/period.git",
+                "reference": "e85d8059f8c628ed5f40679cb7b6169611d58d24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/period/zipball/e85d8059f8c628ed5f40679cb7b6169611d58d24",
+                "reference": "e85d8059f8c628ed5f40679cb7b6169611d58d24",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.0",
+                "nesbot/carbon": "^2.40",
+                "phpunit/phpunit": "^8.0",
+                "spatie/ray": "^1.20"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Period\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Complex period comparisons",
+            "homepage": "https://github.com/spatie/period",
+            "keywords": [
+                "period",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/period/issues",
+                "source": "https://github.com/spatie/period/tree/2.1.1"
+            },
+            "time": "2021-06-11T18:08:24+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -16,8 +16,8 @@ class CreateUserVacationsTable extends Migration
         Schema::create('user_vacations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->date('started_at');
-            $table->date('ended_at')->nullable();
+            $table->date('start');
+            $table->date('end')->nullable();
             $table->integer('reason');
             $table->timestamps();
         });

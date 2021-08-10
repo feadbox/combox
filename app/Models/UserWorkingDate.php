@@ -3,22 +3,24 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class UserWorkingDate extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'started_at',
-        'ended_at',
+        'start',
+        'end',
     ];
 
     protected $casts = [
-        'started_at' => 'date',
-        'ended_at' => 'date',
+        'start' => 'date',
+        'end' => 'date',
     ];
 
     public function user(): BelongsTo
@@ -26,8 +28,23 @@ class UserWorkingDate extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopeByDate(Builder $query, Carbon $date, string $format = 'Y-m-d'): Builder
+    {
+        $mysqlFormat = collect(explode('-', $format))
+            ->map(fn ($str) => "%{$str}")
+            ->implode('-');
+
+        return $query
+            ->where(DB::raw("Date_Format(`start`, '{$mysqlFormat}')"), '<=', $date->format($format))
+            ->where(function ($query) use ($date, $format, $mysqlFormat) {
+                $query
+                    ->whereNull('end')
+                    ->orWhere(DB::raw("Date_Format(`end`, '{$mysqlFormat}')"), '>=', $date->format($format));
+            });
+    }
+
     public function endedAtOrToday(): Carbon
     {
-        return $this->ended_at ?: today();
+        return $this->end ?: today();
     }
 }

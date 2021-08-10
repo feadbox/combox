@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="card-body text-center border-bottom">
                                     <div class="text-uppercase small font-weight-bold">İşe başlama tarihi</div>
-                                    <div class="h3 mt-2">{{ $user->currentWorkingDate->started_at->translatedFormat('j F l, Y') }}</div>
+                                    <div class="h3 mt-2">{{ $user->currentWorkingDate->start->translatedFormat('j F l, Y') }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
@@ -65,7 +65,7 @@
                                                 @foreach ($salaryService->vacations() as $vacation)
                                                     <tr>
                                                         <td>{{ $vacation['reason_title'] }}</td>
-                                                        <td class="text-end">{{ $vacation['started_at']->format('j') }}</td>
+                                                        <td class="text-end">{{ $vacation['start']->format('j') }}</td>
                                                     </tr>
                                                 @endforeach
                                                 @if ($salaryService->isEndOfWork())

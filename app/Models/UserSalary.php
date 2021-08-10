@@ -13,11 +13,11 @@ class UserSalary extends Model
 
     protected $fillable = [
         'price',
-        'started_at',
+        'start',
     ];
 
     protected $casts = [
-        'started_at' => 'date',
+        'start' => 'date',
         'price' => MoneyCast::class,
     ];
 

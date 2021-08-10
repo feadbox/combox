@@ -12,7 +12,7 @@ class UserWorkingDateService
         $dates = collect();
 
         foreach ($user->workingDates as $workingDate) {
-            $monthlyStartedAtPeriod = $workingDate->started_at->toPeriod(
+            $monthlyStartedAtPeriod = $workingDate->start->toPeriod(
                 $workingDate->endedAtOrToday(),
                 '1 month'
             );
@@ -22,11 +22,11 @@ class UserWorkingDateService
             }
 
             $startedAtNextMonthDoesntExists = $dates->filter(function ($date) use ($workingDate) {
-                return $date->startedAt()->format('Y-m') === $workingDate->started_at->addMonth()->format('Y-m');
+                return $date->startedAt()->format('Y-m') === $workingDate->start->addMonth()->format('Y-m');
             })->count() === 0;
 
             if ($startedAtNextMonthDoesntExists && ($workingDate->ended_at && $workingDate->ended_at->isFuture())) {
-                $dates->push(new UserSalaryService($user, $workingDate, $workingDate->started_at->addMonth()));
+                $dates->push(new UserSalaryService($user, $workingDate, $workingDate->start->addMonth()));
             }
 
             $endedAtMonthDoesntExists = $dates->filter(function ($date) use ($workingDate) {

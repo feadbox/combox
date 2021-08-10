@@ -31,7 +31,7 @@ class StoreUserRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:191'],
             'phone' => ['nullable', 'string', 'max:191'],
             'email' => ['nullable', 'email', 'max:191'],
-            'started_at' => ['required', 'date'],
+            'start' => ['required', 'date'],
             'position' => ['required', Rule::exists(Position::class, 'id')],
             'branch' => ['required', Rule::exists(Branch::class, 'id')],
             'salary' => ['required'],

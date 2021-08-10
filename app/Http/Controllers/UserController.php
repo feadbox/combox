@@ -21,7 +21,7 @@ class UserController extends Controller
     {
         $users = User::query()
             ->where(function ($query) use ($request) {
-                filled($request->q) ? $query->search($request->q) : $query->stillWorking();
+                filled($request->q) ? $query->search($request->q) : $query->currentlyWorking();
             })
             ->oldest('first_name')
             ->paginate();
@@ -55,11 +55,11 @@ class UserController extends Controller
         $user->branch()->associate($branch);
         $user->save();
 
-        $workingDate = $user->workingDates()->create(['started_at' => $request->started_at]);
+        $workingDate = $user->workingDates()->create(['start' => $request->start]);
 
         $salary = $user->salaries()->create([
             'price' => $request->salary,
-            'started_at' => $request->started_at,
+            'start' => $request->start,
         ]);
 
         $user->activity(new UserCreatedActivity);

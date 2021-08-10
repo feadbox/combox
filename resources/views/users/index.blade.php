@@ -34,7 +34,7 @@
                                             <a href="{{ $route }}">{{ $user->full_name }}</a>
                                         </td>
                                         <td>{{ $user->phone }}</td>
-                                        <td>{{ $user->isStillWorking() ? 'Evet' : 'Hayır' }}</td>
+                                        <td>{{ $user->isCurrentlyWork() ? 'Evet' : 'Hayır' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

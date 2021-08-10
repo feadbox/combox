@@ -16,7 +16,7 @@ class UserWorkingStartedActivity implements ActivityContract
 
     public function message(): string
     {
-        $date = $this->date->started_at->translatedFormat('j F l Y');
+        $date = $this->date->start->translatedFormat('j F l Y');
 
         return "Çalışanın işe başlama tarihi **{$date}** olarak kaydedildi.";
     }
