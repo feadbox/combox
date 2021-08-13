@@ -10,7 +10,7 @@ final class VacationReasonEnum extends Enum
     const Free = 2;
     const Annual = 3;
 
-    public function getTitleAttribute($value): string
+    public static function getTitleAttribute($value): string
     {
         return match ($value) {
             self::Paid => 'Ücretli İzin',
@@ -19,7 +19,7 @@ final class VacationReasonEnum extends Enum
         };
     }
 
-    public function getIsPaidAttribute($value): bool
+    public static function getIsPaidAttribute($value): bool
     {
         return match ($value) {
             self::Paid => true,
@@ -28,7 +28,7 @@ final class VacationReasonEnum extends Enum
         };
     }
 
-    public function getIsFreeAttribute(): bool
+    public static function getIsFreeAttribute(): bool
     {
         return !$this->isPaid;
     }

@@ -61,8 +61,8 @@
                     </a>
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
-                    label="Ayarlar"
-                    :route-is="['branches.*', 'positions.*']"
+                    label="Sistem"
+                    :route-is="['branches.*', 'positions.*', 'products.*']"
                     icon="settings"
                     has-child
                 >
@@ -73,6 +73,10 @@
                     <a href="{{ route('positions.index') }}" class="dropdown-item">
                         <x-tabler-apps class="dropdown-item-icon" />
                         <span>Pozisyonlar</span>
+                    </a>
+                    <a href="{{ route('products.index') }}" class="dropdown-item">
+                        <x-tabler-apps class="dropdown-item-icon" />
+                        <span>Ürünler</span>
                     </a>
                 </x-tabler::nav-item>
             </x-slot>

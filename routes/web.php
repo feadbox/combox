@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,6 @@ Route::resource('positions', PositionController::class)->except('show');
 
 Route::resource('branches', BranchController::class)->except('show');
 
-Route::resource('salaries', SalaryController::class);
+Route::resource('products', ProductController::class)->except('show');
+
+Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');

@@ -23,6 +23,7 @@
                                     <th>Hakediş</th>
                                     <th>Ödeme</th>
                                     <th>Kalan</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,6 +34,11 @@
                                         <td>{{ Money::format($price = $user->service->price()) }}</td>
                                         <td>{{ Money::format($user->payments_sum_price) }}</td>
                                         <td>{{ Money::format($price - $user->payments_sum_price) }}</td>
+                                        <td class="text-end">
+                                            @if ($isSalaryDate)
+                                                <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-payment">Ödeme yap</button>
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -42,4 +48,16 @@
             </div>
         </div>
     </div>
+    <x-tabler::modal id="modal-payment">
+        <x-tabler::modal-header title="Ödeme yap" />
+        <div class="modal-body">
+            <x-form-input
+                label="Tutar"
+                name="price"
+            />
+        </div>
+        <div class="modal-footer">
+            <x-form-submit>Yazdır ve kaydet</x-form-submit>
+        </div>
+    </x-tabler::modal>
 </x-layouts.app>

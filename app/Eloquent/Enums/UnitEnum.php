@@ -4,16 +4,16 @@ namespace App\Eloquent\Enums;
 
 use Feadbox\Support\Components\Enum;
 
-final class PaymentTypeEnum extends Enum
+class UnitEnum extends Enum
 {
-    const Advance = 1;
-    const Salary = 2;
+    const KG = 1;
+    const Piece = 2;
 
     public static function getTitleAttribute($value): string
     {
         return match ($value) {
-            self::Advance => 'Avans',
-            self::Salary => 'Maaş',
+            self::KG => 'Kilogram',
+            self::Piece => 'Adet',
         };
     }
 }
