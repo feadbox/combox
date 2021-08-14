@@ -23,6 +23,15 @@
                                     :default="$product->unit"
                                 />
                             </div>
+                            <div class="mb-3">
+                                <x-form-select
+                                    label="Etiketler"
+                                    name="tags[]"
+                                    :options="$tags"
+                                    :default="$product->tags->pluck('id')"
+                                    multiple
+                                />
+                            </div>
                             <div>
                                 <x-form-submit />
                             </div>

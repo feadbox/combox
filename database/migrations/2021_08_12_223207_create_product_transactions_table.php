@@ -16,6 +16,7 @@ class CreateProductTransactionsTable extends Migration
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('branch_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
             $table->integer('quantity');
             $table->date('transaction_date');

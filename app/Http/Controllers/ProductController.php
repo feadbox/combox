@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Eloquent\Enums\UnitEnum;
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
+use Feadbox\Tags\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -27,6 +28,7 @@ class ProductController extends Controller
     {
         return view('products.create', [
             'units' => UnitEnum::getAllTitles(),
+            'tags' => Tag::collection('product')->pluck('name', 'id'),
         ]);
     }
 
@@ -38,21 +40,27 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): RedirectResponse
     {
-        Product::create($request->validated());
+        $product = Product::create($request->validated());
+
+        $product->tags()->attach($request->tags);
 
         return redirect()->route('products.index');
     }
 
     public function edit(Product $product): View
     {
-        $units = UnitEnum::getAllTitles();
-
-        return view('products.edit', compact('product', 'units'));
+        return view('products.edit', [
+            'product' => $product,
+            'units' => UnitEnum::getAllTitles(),
+            'tags' => Tag::collection('product')->pluck('name', 'id'),
+        ]);
     }
 
     public function update(StoreProductRequest $request, Product $product): RedirectResponse
     {
         $product->update($request->validated());
+
+        $product->tags()->sync($request->tags);
 
         return redirect()->route('products.index');
     }

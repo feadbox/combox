@@ -2,7 +2,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
-                <x-tabler::page-header :title="$branch->name" :back-route="route('branches.index')">
+                <x-tabler::page-header :title="$tag->name" :back-route="route('tags.index')">
                     <x-slot name="actions">
                         <div class="btn-list">
                             <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete">Kalıcı olarak sil</button>
@@ -11,24 +11,30 @@
                 </x-tabler::page-header>
                 <div class="page-body">
                     <div class="card card-body">
-                        <form action="{{ route('branches.update', $branch) }}" method="post">
+                        <form action="{{ route('tags.update', $tag) }}" method="post">
                             @csrf
                             @method('PUT')
                             <div class="mb-3">
                                 <x-form-input
-                                    label="Şube adı"
+                                    label="Pozisyon adı"
                                     name="name"
-                                    :default="$branch->name"
+                                    :default="$tag->name"
                                 />
                             </div>
-                            <div>
-                                <x-form-submit />
+                            <div class="mb-3">
+                                <x-form-select
+                                    label="Koleksiyon"
+                                    name="collection"
+                                    :options="['product' => 'Ürün']"
+                                    :default="$tag->collection"
+                                />
                             </div>
+                            <x-form-submit />
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <x-tabler::modal-destroy id="modal-delete" :action="route('branches.destroy', $branch)" />
+    <x-tabler::modal-destroy id="modal-delete" :action="route('tags.destroy', $tag)" />
 </x-layouts.app>

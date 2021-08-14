@@ -50,6 +50,18 @@
                     icon="users"
                 />
                 <x-tabler::nav-item
+                    label="Ürün Alımları"
+                    :route="route('product-transactions.index')"
+                    route-is="product-transactions.*"
+                    icon="barcode"
+                />
+                <x-tabler::nav-item
+                    label="Ürünler"
+                    :route="route('products.index')"
+                    route-is="products.*"
+                    icon="barcode"
+                />
+                <x-tabler::nav-item
                     label="Ödemeler"
                     :route-is="['salaries.*']"
                     icon="cash"
@@ -62,7 +74,7 @@
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
                     label="Sistem"
-                    :route-is="['branches.*', 'positions.*', 'products.*']"
+                    :route-is="['branches.*', 'positions.*', 'tags.*']"
                     icon="settings"
                     has-child
                 >
@@ -74,9 +86,9 @@
                         <x-tabler-apps class="dropdown-item-icon" />
                         <span>Pozisyonlar</span>
                     </a>
-                    <a href="{{ route('products.index') }}" class="dropdown-item">
-                        <x-tabler-apps class="dropdown-item-icon" />
-                        <span>Ürünler</span>
+                    <a href="{{ route('tags.index') }}" class="dropdown-item">
+                        <x-tabler-tag class="dropdown-item-icon" />
+                        <span>Etiketler</span>
                     </a>
                 </x-tabler::nav-item>
             </x-slot>

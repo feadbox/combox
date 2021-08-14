@@ -3,7 +3,9 @@
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductTransactionController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +30,8 @@ Route::resource('branches', BranchController::class)->except('show');
 
 Route::resource('products', ProductController::class)->except('show');
 
+Route::resource('tags', TagController::class)->except('show');
+
 Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
+
+Route::get('product-transactions', [ProductTransactionController::class, 'index'])->name('product-transactions.index');

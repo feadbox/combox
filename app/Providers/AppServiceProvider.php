@@ -26,12 +26,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($locale = setting('app.locale')) {
-            App::setLocale($locale);
-        }
+        if (!$this->app->runningInConsole()) {
+            if ($locale = setting('app.locale')) {
+                App::setLocale($locale);
+            }
 
-        if ($timezone = setting('app.timezone')) {
-            date_default_timezone_set($timezone);
+            if ($timezone = setting('app.timezone')) {
+                date_default_timezone_set($timezone);
+            }
         }
 
         Schema::defaultStringLength(191);
