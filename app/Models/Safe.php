@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Safe extends Model
 {
@@ -13,6 +14,11 @@ class Safe extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function safeable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 
     public function payments(): HasMany
     {

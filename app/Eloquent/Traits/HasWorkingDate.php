@@ -18,15 +18,15 @@ trait HasWorkingDate
     {
         return $this->hasOne(UserWorkingDate::class)->ofMany(
             ['start' => 'max'],
-            fn ($query) => $query->where('start', '<', today())
+            fn ($query) => $query->whereDate('start', '<=', today())
         );
     }
 
     public function scopeCurrentlyWorking(Builder $query): Builder
     {
         return $query->whereHas('workingDates', function ($query) {
-            $query->whereDate('start', '<', now())->where(function ($query) {
-                $query->whereNull('end')->orWhereDate('end', '>', now());
+            $query->whereDate('start', '<=', today())->where(function ($query) {
+                $query->whereNull('end')->orWhereDate('end', '>', today());
             });
         });
     }
@@ -34,9 +34,9 @@ trait HasWorkingDate
     public function isCurrentlyWork(): bool
     {
         return $this->workingDates
-            ->where('start', '<', now())
+            ->where('start', '<=', today())
             ->filter(function ($date) {
-                return is_null($date->end) || $date->end > now();
+                return is_null($date->end) || $date->end > today();
             })
             ->isNotEmpty();
     }

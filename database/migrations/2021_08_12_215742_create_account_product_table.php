@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSafesTable extends Migration
+class CreateAccountProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSafesTable extends Migration
      */
     public function up()
     {
-        Schema::create('safes', function (Blueprint $table) {
+        Schema::create('account_product', function (Blueprint $table) {
             $table->id();
-            $table->nullableMorphs('safeable');
-            $table->string('name');
+            $table->foreignId('account_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateSafesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('safes');
+        Schema::dropIfExists('account_product');
     }
 }

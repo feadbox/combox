@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reports;
 
+use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\Product;
 use App\Services\DateService;
@@ -24,6 +25,22 @@ class ProductTransactionController extends Controller
                         ->whereYear('transaction_date', $selectedDate);
                 }], 'price')
                 ->paginate(),
+        ]);
+    }
+
+    public function show(Request $request, Product $product, DateService $dateService): View
+    {
+        return view('product-transactions.show', [
+            'dates' => $dateService->dates(),
+            'selectedDate' => $selectedDate = $dateService->selectedDate($request->date),
+            'branches' => Branch::pluck('name', 'id'),
+            'product' => $product,
+            'transactions' => $product->transactions()
+                ->where('branch_id', $request->branch)
+                ->whereMonth('transaction_date', $selectedDate)
+                ->whereYear('transaction_date', $selectedDate)
+                ->latest()
+                ->paginate()
         ]);
     }
 }

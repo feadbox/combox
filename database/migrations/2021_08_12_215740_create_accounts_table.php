@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSafesTable extends Migration
+class CreateAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSafesTable extends Migration
      */
     public function up()
     {
-        Schema::create('safes', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->nullableMorphs('safeable');
             $table->string('name');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateSafesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('safes');
+        Schema::dropIfExists('accounts');
     }
 }

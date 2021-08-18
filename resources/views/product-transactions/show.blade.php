@@ -2,7 +2,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
-                <x-tabler::page-header title="Ürün Alımları" />
+                <x-tabler::page-header :title="$product->title" :back-route="route('reports.product-transactions.index', ['branch' => request('branch'), 'date' => $selectedDate->format('Y-m')])" />
                 <div class="page-body">
                     <div class="card card-table">
                         <div class="card-header">
@@ -24,24 +24,24 @@
                         <x-tabler::table>
                             <thead>
                                 <tr>
-                                    <th>Ürün</th>
-                                    <th>Toplam harcama</th>
+                                    <th>Tutar</th>
+                                    <th>Adet</th>
+                                    <th>Tarih</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($products as $product)
-                                    <tr data-url="{{ $route = route('reports.product-transactions.show', [$product, 'date' => $selectedDate->format('Y-m'), 'branch' => request('branch')]) }}">
-                                        <td class="td-link">
-                                            <a href="{{ $route }}">{{ $product->title }}</a>
-                                        </td>
-                                        <td>{{ Money::format($product->transactions_sum_price) }}</td>
+                                @foreach ($transactions as $transaction)
+                                    <tr>
+                                        <td>{{ Money::format($transaction->price) }}</td>
+                                        <td>{{ $transaction->quantity }} {{ $product->unit->title }}</td>
+                                        <td>{{ $transaction->transaction_date->translatedFormat('j F') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </x-tabler::table>
                     </div>
                     <x-tabler::paginate>
-                        {{ $products->links() }}
+                        {{ $transactions->links() }}
                     </x-tabler::paginate>
                 </div>
             </div>

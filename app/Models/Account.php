@@ -4,20 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class Branch extends Model
+class Account extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
+        'phone',
+        'email',
     ];
 
-    public function users(): HasMany
+    public function products(): BelongsToMany
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(Product::class)->withTimestamps();
     }
 
     public function safe(): MorphOne
