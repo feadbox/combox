@@ -18,6 +18,7 @@
                                 <x-form-input
                                     label="Şube adı"
                                     name="name"
+                                    autofocus
                                     :default="$branch->name"
                                 />
                             </div>

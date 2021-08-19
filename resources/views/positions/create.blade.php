@@ -11,6 +11,7 @@
                                 <x-form-input
                                     label="Pozisyon adı"
                                     name="name"
+                                    autofocus
                                 />
                             </div>
                             <div class="mb-3">
@@ -19,7 +20,9 @@
                                     name="default_price"
                                 />
                             </div>
-                            <x-form-submit />
+                            <div>
+                                <x-form-submit />
+                            </div>
                         </div>
                     </form>
                 </div>

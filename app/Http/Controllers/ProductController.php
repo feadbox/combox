@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Eloquent\Enums\AccountTypeEnum;
 use App\Eloquent\Enums\UnitEnum;
 use App\Http\Requests\StoreProductRequest;
+use App\Models\Account;
 use App\Models\Product;
 use Feadbox\Tags\Models\Tag;
 use Illuminate\Http\RedirectResponse;
@@ -29,6 +31,7 @@ class ProductController extends Controller
         return view('products.create', [
             'units' => UnitEnum::getAllTitles(),
             'tags' => Tag::collection('product')->pluck('name', 'id'),
+            'accounts' => Account::where('account_type', AccountTypeEnum::Account)->pluck('name', 'id'),
         ]);
     }
 
@@ -43,6 +46,7 @@ class ProductController extends Controller
         $product = Product::create($request->validated());
 
         $product->tags()->attach($request->tags);
+        $product->accounts()->attach($request->accounts);
 
         return redirect()->route('products.index');
     }
@@ -53,6 +57,7 @@ class ProductController extends Controller
             'product' => $product,
             'units' => UnitEnum::getAllTitles(),
             'tags' => Tag::collection('product')->pluck('name', 'id'),
+            'accounts' => Account::where('account_type', AccountTypeEnum::Account)->pluck('name', 'id'),
         ]);
     }
 
@@ -61,6 +66,7 @@ class ProductController extends Controller
         $product->update($request->validated());
 
         $product->tags()->sync($request->tags);
+        $product->accounts()->sync($request->accounts);
 
         return redirect()->route('products.index');
     }

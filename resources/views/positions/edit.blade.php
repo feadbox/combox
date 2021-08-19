@@ -18,6 +18,7 @@
                                 <x-form-input
                                     label="Pozisyon adı"
                                     name="name"
+                                    autofocus
                                     :default="$position->name"
                                 />
                             </div>
@@ -28,7 +29,9 @@
                                     :default="$position->default_price->withoutPrefix()"
                                 />
                             </div>
-                            <x-form-submit />
+                            <div>
+                                <x-form-submit />
+                            </div>
                         </form>
                     </div>
                 </div>

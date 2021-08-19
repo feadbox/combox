@@ -11,6 +11,7 @@
                                 <x-form-input
                                     label="Şube adı"
                                     name="name"
+                                    autofocus
                                 />
                             </div>
                             <div>

@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Branch;
+use App\Models\Product;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreSafeRequest extends FormRequest
+class StoreAccountProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,10 @@ class StoreSafeRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch' => ['nullable', Rule::exists(Branch::class, 'id')],
-            'name' => ['required', 'string', 'max:191'],
+            'product' => ['required', Rule::exists(Product::class, 'id')],
+            'price' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric'],
+            'payment_date' => ['required', 'date'],
         ];
     }
 }

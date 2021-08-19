@@ -28,6 +28,14 @@
                                     multiple
                                 />
                             </div>
+                            <div class="mb-3">
+                                <x-form-select
+                                    label="Cari Hesaplar"
+                                    name="accounts[]"
+                                    :options="$accounts"
+                                    multiple
+                                />
+                            </div>
                             <div>
                                 <x-form-submit />
                             </div>

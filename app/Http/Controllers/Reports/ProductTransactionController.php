@@ -13,7 +13,7 @@ class ProductTransactionController extends Controller
 {
     public function index(Request $request, DateService $dateService): View
     {
-        return view('product-transactions.index', [
+        return view('reports.product-transactions.index', [
             'dates' => $dateService->dates(),
             'selectedDate' => $selectedDate = $dateService->selectedDate($request->date),
             'branches' => Branch::pluck('name', 'id'),
@@ -30,7 +30,7 @@ class ProductTransactionController extends Controller
 
     public function show(Request $request, Product $product, DateService $dateService): View
     {
-        return view('product-transactions.show', [
+        return view('reports.product-transactions.show', [
             'dates' => $dateService->dates(),
             'selectedDate' => $selectedDate = $dateService->selectedDate($request->date),
             'branches' => Branch::pluck('name', 'id'),

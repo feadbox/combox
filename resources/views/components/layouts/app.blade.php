@@ -13,7 +13,7 @@
     <div class="wrapper">
         <x-tabler::app-header>
             <x-slot name="logo">
-                <a href="{{ route('dashboard') }}">{{ config('app.name') }}</a>
+                <a href="{{ route('accounts.index') }}">{{ config('app.name') }}</a>
             </x-slot>
             <x-slot name="nav">
                 <div class="nav-item dropdown">
@@ -38,9 +38,9 @@
         <x-tabler::app-navbar>
             <x-slot name="nav">
                 <x-tabler::nav-item
-                    label="Kasalar"
-                    :route="route('safes.index')"
-                    route-is="safes.*"
+                    label="Hesaplar"
+                    :route="route('accounts.index')"
+                    route-is="accounts.*"
                     icon="shield"
                 />
                 <x-tabler::nav-item
@@ -53,31 +53,8 @@
                     <a href="{{ route('branches.index') }}" class="dropdown-item">Etikete göre</a>
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
-                    label="Ödemeler"
-                    :route-is="['salaries.*']"
-                    icon="cash"
-                    has-child
-                >
-                    <a href="{{ route('salaries.index') }}" class="dropdown-item">
-                        <x-tabler-coin class="dropdown-item-icon" />
-                        <span>Maaşlar</span>
-                    </a>
-                </x-tabler::nav-item>
-                <x-tabler::nav-item
-                    label="Ürünler"
-                    :route="route('products.index')"
-                    route-is="products.*"
-                    icon="barcode"
-                />
-                <x-tabler::nav-item
-                    label="Çalışanlar"
-                    :route="route('users.index')"
-                    route-is="users.*"
-                    icon="users"
-                />
-                <x-tabler::nav-item
                     label="Şirket"
-                    :route-is="['branches.*', 'positions.*', 'tags.*', 'accounts.*']"
+                    :route-is="['branches.*', 'positions.*', 'tags.*', 'users.*', 'products.*', 'salaries.*']"
                     icon="settings"
                     has-child
                 >
@@ -93,9 +70,17 @@
                         <x-tabler-tag class="dropdown-item-icon" />
                         <span>Etiketler</span>
                     </a>
-                    <a href="{{ route('accounts.index') }}" class="dropdown-item">
+                    <a href="{{ route('users.index') }}" class="dropdown-item">
                         <x-tabler-users class="dropdown-item-icon" />
-                        <span>Cariler</span>
+                        <span>Çalışanlar</span>
+                    </a>
+                    <a href="{{ route('products.index') }}" class="dropdown-item">
+                        <x-tabler-barcode class="dropdown-item-icon" />
+                        <span>Ürünler</span>
+                    </a>
+                    <a href="{{ route('salaries.index') }}" class="dropdown-item">
+                        <x-tabler-coin class="dropdown-item-icon" />
+                        <span>Maaşlar</span>
                     </a>
                 </x-tabler::nav-item>
             </x-slot>

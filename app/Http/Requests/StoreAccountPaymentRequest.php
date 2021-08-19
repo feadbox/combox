@@ -2,11 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Branch;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreAccountRequest extends FormRequest
+class StoreAccountPaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +24,9 @@ class StoreAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch' => ['nullable', Rule::exists(Branch::class, 'id')],
-            'name' => ['required', 'string', 'max:191'],
+            'price' => ['required', 'numeric'],
+            'description' => ['nullable', 'string', 'max:500'],
+            'payment_date' => ['required', 'date'],
         ];
     }
 }

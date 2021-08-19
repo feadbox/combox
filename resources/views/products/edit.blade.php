@@ -32,6 +32,15 @@
                                     multiple
                                 />
                             </div>
+                            <div class="mb-3">
+                                <x-form-select
+                                    label="Cari Hesaplar"
+                                    name="accounts[]"
+                                    :options="$accounts"
+                                    :default="$product->accounts->pluck('id')"
+                                    multiple
+                                />
+                            </div>
                             <div>
                                 <x-form-submit />
                             </div>

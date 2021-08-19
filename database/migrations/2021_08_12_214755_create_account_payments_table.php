@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSafePaymentsTable extends Migration
+class CreateAccountPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateSafePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('safe_payments', function (Blueprint $table) {
+        Schema::create('account_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('safe_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('account_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->date('payment_date');
+            $table->nullableMorphs('relation');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateSafePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('safe_payments');
+        Schema::dropIfExists('account_payments');
     }
 }

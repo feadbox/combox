@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountPaymentController;
+use App\Http\Controllers\AccountProductController;
+use App\Http\Controllers\AccountTransferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProductController;
@@ -23,8 +26,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'dashboard')->name('dashboard');
-
 Route::resource('users', UserController::class);
 
 Route::resource('positions', PositionController::class)->except('show');
@@ -35,8 +36,10 @@ Route::resource('products', ProductController::class)->except('show');
 
 Route::resource('tags', TagController::class)->except('show');
 
-Route::resource('safes', SafeController::class);
-
+Route::get('accounts/transfer', [AccountTransferController::class, 'index'])->name('accounts.transfers.index');
+Route::post('accounts/transfer', [AccountTransferController::class, 'store'])->name('accounts.transfers.store');
+Route::post('accounts/{account}/products', [AccountProductController::class, 'store'])->name('accounts.products.store');
+Route::resource('accounts.payments', AccountPaymentController::class)->only('store');
 Route::resource('accounts', AccountController::class);
 
 Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
