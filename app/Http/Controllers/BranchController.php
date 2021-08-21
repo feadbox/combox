@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Eloquent\Enums\AccountTypeEnum;
 use App\Http\Requests\StoreBranchRequest;
+use App\Models\Account;
 use App\Models\Branch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,7 +26,15 @@ class BranchController extends Controller
 
     public function store(StoreBranchRequest $request): RedirectResponse
     {
-        Branch::create($request->validated());
+        $branch = Branch::create($request->validated());
+
+        $account = new Account([
+            'name' => $branch->name,
+            'account_type' => AccountTypeEnum::Branch,
+        ]);
+
+        $account->accountable()->associate($branch);
+        $account->save();
 
         return redirect()->route('branches.index');
     }
@@ -44,6 +54,7 @@ class BranchController extends Controller
     public function destroy(Branch $branch): RedirectResponse
     {
         $branch->delete();
+        $branch->account->delete();
 
         return redirect()->route('branches.index');
     }

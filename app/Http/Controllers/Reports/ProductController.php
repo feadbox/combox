@@ -9,36 +9,36 @@ use App\Services\DateService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class ProductTransactionController extends Controller
+class ProductController extends Controller
 {
     public function index(Request $request, DateService $dateService): View
     {
-        return view('reports.product-transactions.index', [
+        return view('reports.products.index', [
             'dates' => $dateService->dates(),
             'selectedDate' => $selectedDate = $dateService->selectedDate($request->date),
             'branches' => Branch::pluck('name', 'id'),
             'products' => Product::query()
-                ->withSum(['transactions' => function ($query) use ($request, $selectedDate) {
+                ->withSum(['payments' => function ($query) use ($request, $selectedDate) {
                     $query
                         ->where('branch_id', $request->branch)
-                        ->whereMonth('transaction_date', $selectedDate)
-                        ->whereYear('transaction_date', $selectedDate);
+                        ->whereMonth('payment_date', $selectedDate)
+                        ->whereYear('payment_date', $selectedDate);
                 }], 'price')
-                ->paginate(),
+                ->paginate(50),
         ]);
     }
 
     public function show(Request $request, Product $product, DateService $dateService): View
     {
-        return view('reports.product-transactions.show', [
+        return view('reports.products.show', [
             'dates' => $dateService->dates(),
             'selectedDate' => $selectedDate = $dateService->selectedDate($request->date),
             'branches' => Branch::pluck('name', 'id'),
             'product' => $product,
-            'transactions' => $product->transactions()
+            'payments' => $product->payments()
                 ->where('branch_id', $request->branch)
-                ->whereMonth('transaction_date', $selectedDate)
-                ->whereYear('transaction_date', $selectedDate)
+                ->whereMonth('payment_date', $selectedDate)
+                ->whereYear('payment_date', $selectedDate)
                 ->latest()
                 ->paginate()
         ]);

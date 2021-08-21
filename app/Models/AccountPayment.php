@@ -33,4 +33,9 @@ class AccountPayment extends Model
     {
         return $this->belongsTo(Account::class);
     }
+
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
 }

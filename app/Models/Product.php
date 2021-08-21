@@ -7,7 +7,7 @@ use Feadbox\Tags\Traits\HasTags;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Product extends Model
 {
@@ -22,13 +22,13 @@ class Product extends Model
         'unit' => UnitEnum::class,
     ];
 
-    public function transactions(): HasMany
-    {
-        return $this->hasMany(ProductTransaction::class);
-    }
-
     public function accounts(): BelongsToMany
     {
         return $this->belongsToMany(Account::class)->withTimestamps();
+    }
+
+    public function payments(): MorphMany
+    {
+        return $this->morphMany(AccountPayment::class, 'relation');
     }
 }

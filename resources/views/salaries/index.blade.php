@@ -1,4 +1,15 @@
 <x-layouts.app>
+    <x-slot name="scripts">
+        <script>
+            [...document.querySelectorAll('[data-bs-target="#modal-payment"]')].forEach(function (e) {
+                e.addEventListener('click', function (button) {
+                    var input = document.getElementById('modal-payment').querySelector('input[name=user]');
+                    
+                    input.value = button.target.dataset.id;
+                });
+            });
+        </script>
+    </x-slot>
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
@@ -35,9 +46,7 @@
                                         <td>{{ Money::format($user->payments_sum_price) }}</td>
                                         <td>{{ Money::format($price - $user->payments_sum_price) }}</td>
                                         <td class="text-end">
-                                            @if ($isSalaryDate)
-                                                <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-payment">Ödeme yap</button>
-                                            @endif
+                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-payment" data-id="{{ $user->id }}">Ödeme yap</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -51,13 +60,46 @@
     <x-tabler::modal id="modal-payment">
         <x-tabler::modal-header title="Ödeme yap" />
         <div class="modal-body">
-            <x-form-input
-                label="Tutar"
-                name="price"
-            />
-        </div>
-        <div class="modal-footer">
-            <x-form-submit>Yazdır ve kaydet</x-form-submit>
+            <form action="{{ route('salaries.store') }}" method="post">
+                @csrf
+                <input type="hidden" name="user">
+                <div class="mb-3">
+                    <x-form-select
+                        label="Maaş dönemi"
+                        name="salary_period"
+                        :options="$dates"
+                        :default="$selectedDate->format('Y-m')"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <x-form-select
+                        label="Ödeme tipi"
+                        name="type"
+                        :options="$paymentTypes"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <x-form-input
+                        label="Tutar"
+                        name="price"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <x-form-input
+                        label="Ödeme tarihi"
+                        type="date"
+                        name="payment_date"
+                        :default="today()->format('Y-m-d')"
+                        required
+                    />
+                </div>
+                <div>
+                    <x-form-submit />
+                </div>
+            </form>
         </div>
     </x-tabler::modal>
 </x-layouts.app>

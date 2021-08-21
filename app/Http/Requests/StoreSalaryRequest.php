@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Branch;
-use App\Models\Product;
+use App\Eloquent\Enums\PaymentTypeEnum;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreAccountProductRequest extends FormRequest
+class StoreSalaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +27,11 @@ class StoreAccountProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product' => ['required', Rule::exists(Product::class, 'id')],
-            'branch' => ['required', Rule::exists(Branch::class, 'id')],
-            'quantity' => ['required', 'numeric'],
+            'user' => ['required', Rule::exists(User::class, 'id')],
+            'type' => ['required', Rule::in(PaymentTypeEnum::getValues())],
             'price' => ['required', 'numeric'],
             'payment_date' => ['required', 'date'],
+            'salary_period' => ['required', 'date'],
         ];
     }
 }

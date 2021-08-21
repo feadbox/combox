@@ -12,8 +12,6 @@ class AccountProductController extends Controller
 {
     public function store(StoreAccountProductRequest $request, Account $account): RedirectResponse
     {
-        $product = Product::find($request->product);
-
         $payment = new AccountPayment([
             'price' => -$request->price,
             'quantity' => $request->quantity,
@@ -22,7 +20,9 @@ class AccountProductController extends Controller
         ]);
 
         $payment->account()->associate($account);
-        $payment->relation()->associate($product);
+        $payment->relation()->associate(Product::find($request->product));
+        $payment->branch()->associate($request->branch);
+
         $payment->save();
 
         return redirect()->route('accounts.show', $account);

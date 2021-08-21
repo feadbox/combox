@@ -16,6 +16,7 @@ class CreateAccountPaymentsTable extends Migration
         Schema::create('account_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('account_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('branch_id')->nullable()->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
             $table->text('description')->nullable();
             $table->integer('quantity')->nullable();

@@ -19,6 +19,7 @@ class CreateUserPaymentsTable extends Migration
             $table->bigInteger('price');
             $table->integer('type');
             $table->date('payment_date');
+            $table->date('salary_period');
             $table->timestamps();
         });
     }

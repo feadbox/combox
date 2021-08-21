@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Eloquent\Enums\AccountTypeEnum;
 use App\Http\Requests\StoreAccountRequest;
 use App\Models\Branch;
 use App\Models\Account;
@@ -11,10 +12,20 @@ use Illuminate\View\View;
 
 class AccountController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         return view('accounts.index', [
-            'accounts' => Account::withSum('payments', 'price')->paginate(),
+            'accounts' => Account::query()
+                ->withSum('payments', 'price')
+                ->whereIn(
+                    'account_type',
+                    $request->type === 'account'
+                        ? [AccountTypeEnum::Account]
+                        : [AccountTypeEnum::Safe, AccountTypeEnum::Branch]
+                )
+                ->latest('is_default')
+                ->latest('payments_sum_price')
+                ->paginate(),
         ]);
     }
 
@@ -22,14 +33,13 @@ class AccountController extends Controller
     {
         return view('accounts.create', [
             'branches' => Branch::pluck('name', 'id'),
+            'accountTypes' => AccountTypeEnum::getAllTitles(),
         ]);
     }
 
     public function store(StoreAccountRequest $request): RedirectResponse
     {
-        $account = new Account($request->only('name'));
-        $account->branch()->associate($request->branch);
-        $account->save();
+        Account::create($request->validated());
 
         return redirect()->route('accounts.index');
     }
@@ -41,40 +51,36 @@ class AccountController extends Controller
         $payments = $account->payments()->latest()->paginate();
         $products = $account->products()->pluck('title', 'products.id');
 
-        return view('accounts.show', compact('account', 'payments', 'products'));
+        $branches = Branch::pluck('name', 'id');
+
+        return view('accounts.show', compact(
+            'account',
+            'branches',
+            'payments',
+            'products'
+        ));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Account $account): View
     {
-        //
+        $accountTypes = AccountTypeEnum::getAllTitles();
+
+        return view('accounts.edit', compact('account', 'accountTypes'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(StoreAccountRequest $request, Account $account): RedirectResponse
     {
-        //
+        $account->update($request->validated());
+
+        return redirect()->route('accounts.show', $account);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Account $account): RedirectResponse
     {
-        //
+        if (!$account->forBranch()) {
+            $account->delete();
+        }
+
+        return redirect()->route('accounts.index');
     }
 }

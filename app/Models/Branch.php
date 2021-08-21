@@ -20,8 +20,13 @@ class Branch extends Model
         return $this->hasMany(User::class);
     }
 
-    public function safe(): MorphOne
+    public function account(): MorphOne
     {
-        return $this->morphOne(Safe::class, 'safeable');
+        return $this->morphOne(Account::class, 'accountable');
+    }
+
+    public function accountPayments(): HasMany
+    {
+        return $this->hasMany(AccountPayment::class);
     }
 }

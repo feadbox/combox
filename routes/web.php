@@ -7,12 +7,10 @@ use App\Http\Controllers\AccountTransferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductTransactionController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Reports;
-use App\Http\Controllers\SafeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,15 +41,12 @@ Route::resource('accounts.payments', AccountPaymentController::class)->only('sto
 Route::resource('accounts', AccountController::class);
 
 Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
+Route::post('salaries', [SalaryController::class, 'store'])->name('salaries.store');
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
-    Route::get(
-        'product-transactions',
-        [Reports\ProductTransactionController::class, 'index']
-    )->name('product-transactions.index');
+    Route::get('products', [Reports\ProductController::class, 'index'])->name('products.index');
+    Route::get('products/{product}', [Reports\ProductController::class, 'show'])->name('products.show');
 
-    Route::get(
-        'product-transactions/{product}',
-        [Reports\ProductTransactionController::class, 'show']
-    )->name('product-transactions.show');
+    Route::get('tags', [Reports\TagController::class, 'index'])->name('tags.index');
+    Route::get('tags/{tag}', [Reports\TagController::class, 'show'])->name('tags.show');
 });

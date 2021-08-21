@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Branch;
+use App\Eloquent\Enums\AccountTypeEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -26,8 +26,8 @@ class StoreAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'branch' => ['nullable', Rule::exists(Branch::class, 'id')],
             'name' => ['required', 'string', 'max:191'],
+            'account_type' => ['required', Rule::in(AccountTypeEnum::getValues())],
         ];
     }
 }

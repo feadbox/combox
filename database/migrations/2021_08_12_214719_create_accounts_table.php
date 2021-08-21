@@ -20,6 +20,7 @@ class CreateAccountsTable extends Migration
             $table->string('phone')->nullable();
             $table->integer('account_type');
             $table->nullableMorphs('accountable');
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }

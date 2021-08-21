@@ -42,15 +42,19 @@
                     :route="route('accounts.index')"
                     route-is="accounts.*"
                     icon="shield"
-                />
+                    has-child
+                >
+                    <a href="{{ route('accounts.index', ['type' => 'safe']) }}" class="dropdown-item">Kasalar</a>
+                    <a href="{{ route('accounts.index', ['type' => 'account']) }}" class="dropdown-item">Cari Hesaplar</a>
+                </x-tabler::nav-item>
                 <x-tabler::nav-item
                     label="Raporlar"
                     route-is="reports.*"
                     icon="report-analytics"
                     has-child
                 >
-                    <a href="{{ route('reports.product-transactions.index') }}" class="dropdown-item">Ürüne göre</a>
-                    <a href="{{ route('branches.index') }}" class="dropdown-item">Etikete göre</a>
+                    <a href="{{ route('reports.products.index') }}" class="dropdown-item">Ürüne göre</a>
+                    <a href="{{ route('reports.tags.index') }}" class="dropdown-item">Etikete göre</a>
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
                     label="Şirket"

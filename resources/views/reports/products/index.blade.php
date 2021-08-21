@@ -30,11 +30,11 @@
                             </thead>
                             <tbody>
                                 @foreach ($products as $product)
-                                    <tr data-url="{{ $route = route('reports.product-transactions.show', [$product, 'date' => $selectedDate->format('Y-m'), 'branch' => request('branch')]) }}">
+                                    <tr data-url="{{ $route = route('reports.products.show', [$product, 'date' => $selectedDate->format('Y-m'), 'branch' => request('branch')]) }}">
                                         <td class="td-link">
                                             <a href="{{ $route }}">{{ $product->title }}</a>
                                         </td>
-                                        <td>{{ Money::format($product->transactions_sum_price) }}</td>
+                                        <td>{{ Money::format($product->payments_sum_price * -1) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
