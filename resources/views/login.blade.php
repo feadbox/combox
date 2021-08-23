@@ -12,6 +12,7 @@
             name="email"
         />
         <x-form-input
+            type="password"
             name="password"
         />
         <x-form-submit />
