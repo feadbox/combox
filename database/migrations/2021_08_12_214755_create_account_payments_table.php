@@ -19,7 +19,7 @@ class CreateAccountPaymentsTable extends Migration
             $table->foreignId('branch_id')->nullable()->constrained()->cascadeOnDelete();
             $table->bigInteger('price');
             $table->text('description')->nullable();
-            $table->integer('quantity')->nullable();
+            $table->double('quantity', 8, 2)->nullable();
             $table->date('payment_date');
             $table->nullableMorphs('relation');
             $table->timestamps();

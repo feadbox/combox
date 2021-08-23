@@ -7,6 +7,7 @@ use App\Eloquent\Activities\UserCreatedActivity;
 use App\Eloquent\Activities\UserPositionSavedActivity;
 use App\Eloquent\Activities\UserSalarySavedActivity;
 use App\Eloquent\Activities\UserWorkingStartedActivity;
+use App\Eloquent\Enums\VacationReasonEnum;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Branch;
 use App\Models\Position;
@@ -76,6 +77,7 @@ class UserController extends Controller
         return view('users.show', [
             'user' => $user,
             'period' => $service->period($user),
+            'reasons' => VacationReasonEnum::getAllTitles(),
         ]);
     }
 

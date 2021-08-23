@@ -77,9 +77,11 @@ class AccountController extends Controller
 
     public function destroy(Account $account): RedirectResponse
     {
-        if (!$account->forBranch()) {
-            $account->delete();
+        if ($account->forBranch() || $account->is_default) {
+            return redirect()->route('accounts.index');
         }
+
+        $account->delete();
 
         return redirect()->route('accounts.index');
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Reports;
+use App\Http\Controllers\UserVacationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('users/{user}/vacations', [UserVacationController::class, 'store'])->name('users.vacations.store');
 Route::resource('users', UserController::class);
 
 Route::resource('positions', PositionController::class)->except('show');

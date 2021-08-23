@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Eloquent\Enums\VacationReasonEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreAccountPaymentRequest extends FormRequest
+class StoreUserVacationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +26,9 @@ class StoreAccountPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'price' => ['required', 'numeric'],
-            'tags' => ['required', 'string', 'max:191'],
-            'description' => ['nullable', 'string', 'max:500'],
-            'payment_date' => ['required', 'date'],
+            'reason' => ['required', Rule::in(VacationReasonEnum::getValues())],
+            'start' => ['required', 'date'],
+            'end' => ['nullable', 'date'],
         ];
     }
 }

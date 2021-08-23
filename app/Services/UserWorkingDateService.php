@@ -25,7 +25,7 @@ class UserWorkingDateService
                 return $date->startedAt()->format('Y-m') === $workingDate->start->addMonth()->format('Y-m');
             })->count() === 0;
 
-            if ($startedAtNextMonthDoesntExists && ($workingDate->ended_at && $workingDate->ended_at->isFuture())) {
+            if ($startedAtNextMonthDoesntExists && ($workingDate->end && $workingDate->end->isFuture())) {
                 $dates->push(new UserSalaryService($user, $workingDate, $workingDate->start->addMonth()));
             }
 

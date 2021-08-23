@@ -12,7 +12,7 @@ class UnitEnum extends Enum
     public static function getTitleAttribute($value): string
     {
         return match ($value) {
-            self::KG => 'Kilogram',
+            self::KG => 'KG',
             self::Piece => 'Adet',
         };
     }

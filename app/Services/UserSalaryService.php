@@ -56,7 +56,7 @@ class UserSalaryService
 
     public function isEndOfWork(): bool
     {
-        return $this->workingDate->ended_at && $this->startedAt->isSameMonth($this->workingDate->ended_at);
+        return $this->workingDate->end && $this->startedAt->isSameMonth($this->workingDate->end);
     }
 
     public function vacations(): Collection
@@ -73,12 +73,12 @@ class UserSalaryService
         $collection = collect();
 
         foreach ($vacations as $vacation) {
-            if ($vacation->ended_at) {
-                foreach ($vacation->start->toPeriod($vacation->ended_at, '1 day') as $startedAt) {
+            if ($vacation->end) {
+                foreach ($vacation->start->toPeriod($vacation->end, '1 day') as $startedAt) {
                     $collection->push([
                         'start' => $startedAt,
                         'reason_title' => $vacation->reason->title,
-                        'reason_is_free' => $vacation->reason->isFree,
+                        'reason_is_free' => !$vacation->reason->isPaid,
                     ]);
                 }
 
@@ -88,7 +88,7 @@ class UserSalaryService
             $collection->push([
                 'start' => $vacation->start,
                 'reason_title' => $vacation->reason->title,
-                'reason_is_free' => $vacation->reason->isFree,
+                'reason_is_free' => !$vacation->reason->isPaid,
             ]);
         }
 
@@ -107,7 +107,7 @@ class UserSalaryService
         $paidDays = 30;
 
         if ($this->startedAt->isCurrentMonth()) {
-            $paidDays = $this->isEndOfWork() ? $this->workingDate->ended_at->day : today()->subDay()->day;
+            $paidDays = $this->isEndOfWork() ? $this->workingDate->end->day : today()->subDay()->day;
         } elseif ($this->isStartOfWork()) {
             $paidDays = $this->workingDate->start->lastOfMonth()->day;
         }
@@ -118,7 +118,7 @@ class UserSalaryService
         }
 
         if (!$this->startedAt->isCurrentMonth() && $this->isEndOfWork()) {
-            $paidDays -= 30 - $this->workingDate->ended_at->day;
+            $paidDays -= 30 - $this->workingDate->end->day;
         }
 
         foreach ($this->vacations() as $vacation) {

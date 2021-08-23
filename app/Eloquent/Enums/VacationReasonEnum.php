@@ -27,9 +27,4 @@ final class VacationReasonEnum extends Enum
             self::Annual => true,
         };
     }
-
-    public static function getIsFreeAttribute(): bool
-    {
-        return !$this->isPaid;
-    }
 }

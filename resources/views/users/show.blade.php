@@ -5,6 +5,7 @@
                 <x-tabler::page-header :title="$user->full_name" :back-route="route('users.index')">
                     <x-slot name="actions">
                         <div class="btn-list">
+                            <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-vacation">İzin ekle</button>
                             <a href="{{ route('users.edit', $user) }}" class="btn">Düzenle</a>
                         </div>
                     </x-slot>
@@ -73,7 +74,7 @@
                                                         <td>
                                                             <span class="text-danger">İşten ayrıldı</span>
                                                         </td>
-                                                        <td class="text-end">{{ $salaryService->workingDate()->ended_at->day }}</td>
+                                                        <td class="text-end">{{ $salaryService->workingDate()->end->day }}</td>
                                                     </tr>
                                                 @endif
                                                 <tr>
@@ -93,4 +94,37 @@
             </div>
         </div>
     </div>
+    <x-tabler::modal id="modal-vacation">
+        <x-tabler::modal-header title="İzin ekle" />
+        <div class="modal-body">
+            <form action="{{ route('users.vacations.store', $user) }}" method="post">
+                @csrf
+                <div class="mb-3">
+                    <x-form-select
+                        label="İzin türü"
+                        name="reason"
+                        :options="$reasons"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <x-form-input
+                        label="Başlangıç tarihi"
+                        type="date"
+                        name="start"
+                        :default="today()->format('Y-m-d')"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <x-form-input
+                        label="Bitiş tarihi"
+                        type="date"
+                        name="end"
+                    />
+                </div>
+                <x-form-submit />
+            </form>
+        </div>
+    </x-tabler::modal>
 </x-layouts.app>

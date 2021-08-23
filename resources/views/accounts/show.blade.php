@@ -7,7 +7,7 @@
                         <div class="btn-list">
                             <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-buy">Ürün al</button>
                             <a href="{{ route('accounts.edit', $account) }}" class="btn">Düzenle</a>
-                            @if (!$account->forBranch())
+                            @if (!$account->forBranch() && !$account->is_default)
                                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete">Kalıcı olarak sil</button>
                             @endif
                         </div>
@@ -49,6 +49,13 @@
                                             required
                                         />
                                     </div>
+                                    <div class="mb-3">
+                                        <x-form-input
+                                            label="Etiketler"
+                                            name="tags"
+                                            required
+                                        />
+                                    </div>
                                     <div>
                                         <x-form-submit />
                                     </div>
@@ -64,6 +71,8 @@
                                             <th>Açıklama</th>
                                             <th>Şube</th>
                                             <th>Ürün</th>
+                                            <th>Personel</th>
+                                            <th>Etiketler</th>
                                             <th>Tarih</th>
                                         </tr>
                                     </thead>
@@ -80,6 +89,19 @@
                                                     @else
                                                         -
                                                     @endif
+                                                </td>
+                                                <td>
+                                                    @if ($payment->relation instanceof App\Models\UserPayment)
+                                                        {{ $payment->relation->user->full_name }}
+                                                        ({{ $payment->relation->type->title }})
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @foreach ($payment->tags as $tag)
+                                                        <span class="tag">{{ $tag->name }}</span>
+                                                    @endforeach
                                                 </td>
                                                 <td>{{ $payment->payment_date->translatedFormat('j F Y') }}</td>
                                             </tr>
@@ -121,6 +143,7 @@
                     <x-form-input
                         label="Adet / KG"
                         type="number"
+                        step="0.01"
                         name="quantity"
                         required
                     />

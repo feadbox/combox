@@ -62,6 +62,18 @@
                     icon="settings"
                     has-child
                 >
+                    <a href="{{ route('users.index') }}" class="dropdown-item">
+                        <x-tabler-users class="dropdown-item-icon" />
+                        <span>Çalışanlar</span>
+                    </a>
+                    <a href="{{ route('salaries.index') }}" class="dropdown-item">
+                        <x-tabler-coin class="dropdown-item-icon" />
+                        <span>Maaşlar</span>
+                    </a>
+                    <a href="{{ route('products.index') }}" class="dropdown-item">
+                        <x-tabler-barcode class="dropdown-item-icon" />
+                        <span>Ürünler</span>
+                    </a>
                     <a href="{{ route('branches.index') }}" class="dropdown-item">
                         <x-tabler-building-store class="dropdown-item-icon" />
                         <span>Şubeler</span>
@@ -73,18 +85,6 @@
                     <a href="{{ route('tags.index') }}" class="dropdown-item">
                         <x-tabler-tag class="dropdown-item-icon" />
                         <span>Etiketler</span>
-                    </a>
-                    <a href="{{ route('users.index') }}" class="dropdown-item">
-                        <x-tabler-users class="dropdown-item-icon" />
-                        <span>Çalışanlar</span>
-                    </a>
-                    <a href="{{ route('products.index') }}" class="dropdown-item">
-                        <x-tabler-barcode class="dropdown-item-icon" />
-                        <span>Ürünler</span>
-                    </a>
-                    <a href="{{ route('salaries.index') }}" class="dropdown-item">
-                        <x-tabler-coin class="dropdown-item-icon" />
-                        <span>Maaşlar</span>
                     </a>
                 </x-tabler::nav-item>
             </x-slot>
