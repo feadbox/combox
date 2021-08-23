@@ -7,7 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('login') }}">
+    <form action="{{ route('login') }}" method="post">
+        @csrf
         <x-form-input
             name="email"
         />
