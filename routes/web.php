@@ -25,30 +25,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('users/{user}/vacations', [UserVacationController::class, 'store'])->name('users.vacations.store');
-Route::resource('users', UserController::class);
+Route::group(['middleware' => 'auth'], function () {
+    Route::redirect('/', '/accounts');
 
-Route::resource('positions', PositionController::class)->except('show');
+    Route::post('users/{user}/vacations', [UserVacationController::class, 'store'])->name('users.vacations.store');
+    Route::resource('users', UserController::class);
 
-Route::resource('branches', BranchController::class)->except('show');
+    Route::resource('positions', PositionController::class)->except('show');
 
-Route::resource('products', ProductController::class)->except('show');
+    Route::resource('branches', BranchController::class)->except('show');
 
-Route::resource('tags', TagController::class)->except('show');
+    Route::resource('products', ProductController::class)->except('show');
 
-Route::get('accounts/transfer', [AccountTransferController::class, 'index'])->name('accounts.transfers.index');
-Route::post('accounts/transfer', [AccountTransferController::class, 'store'])->name('accounts.transfers.store');
-Route::post('accounts/{account}/products', [AccountProductController::class, 'store'])->name('accounts.products.store');
-Route::resource('accounts.payments', AccountPaymentController::class)->only('store');
-Route::resource('accounts', AccountController::class);
+    Route::resource('tags', TagController::class)->except('show');
 
-Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
-Route::post('salaries', [SalaryController::class, 'store'])->name('salaries.store');
+    Route::get('accounts/transfer', [AccountTransferController::class, 'index'])->name('accounts.transfers.index');
+    Route::post('accounts/transfer', [AccountTransferController::class, 'store'])->name('accounts.transfers.store');
+    Route::post('accounts/{account}/products', [AccountProductController::class, 'store'])->name('accounts.products.store');
+    Route::resource('accounts.payments', AccountPaymentController::class)->only('store');
+    Route::resource('accounts', AccountController::class);
 
-Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
-    Route::get('products', [Reports\ProductController::class, 'index'])->name('products.index');
-    Route::get('products/{product}', [Reports\ProductController::class, 'show'])->name('products.show');
+    Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
+    Route::post('salaries', [SalaryController::class, 'store'])->name('salaries.store');
 
-    Route::get('tags', [Reports\TagController::class, 'index'])->name('tags.index');
-    Route::get('tags/{tag}', [Reports\TagController::class, 'show'])->name('tags.show');
+    Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
+        Route::get('products', [Reports\ProductController::class, 'index'])->name('products.index');
+        Route::get('products/{product}', [Reports\ProductController::class, 'show'])->name('products.show');
+
+        Route::get('tags', [Reports\TagController::class, 'index'])->name('tags.index');
+        Route::get('tags/{tag}', [Reports\TagController::class, 'show'])->name('tags.show');
+    });
 });
