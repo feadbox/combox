@@ -80,7 +80,9 @@
                                         @foreach ($payments as $payment)
                                             <tr>
                                                 <td class="text-{{ $payment->price->cents() < 0 ? 'danger' : 'success' }}">{{ Money::format(abs($payment->price->cents())) }}</td>
-                                                <td>{{ $payment->description ?: '-' }}</td>
+                                                <td>
+                                                    <span title="{{ $payment->description }}">{{ $payment->description ? Str::limit($payment->description, 200) : '-' }}</span>
+                                                </td>
                                                 <td>{{ $payment->branch->name ?? '-' }}</td>
                                                 <td>
                                                     @if ($payment->relation instanceof App\Models\Product)
