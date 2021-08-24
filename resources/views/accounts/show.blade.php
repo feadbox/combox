@@ -28,8 +28,8 @@
                                     @csrf
                                     <div class="mb-3">
                                         <x-form-input
-                                            label="Tutar"
-                                            name="price"
+                                            label="Etiketler"
+                                            name="tags"
                                             required
                                         />
                                     </div>
@@ -42,17 +42,17 @@
                                     </div>
                                     <div class="mb-3">
                                         <x-form-input
-                                            label="Tarih"
-                                            type="date"
-                                            name="payment_date"
-                                            :default="today()->format('Y-m-d')"
+                                            label="Tutar"
+                                            name="price"
                                             required
                                         />
                                     </div>
                                     <div class="mb-3">
                                         <x-form-input
-                                            label="Etiketler"
-                                            name="tags"
+                                            label="Tarih"
+                                            type="date"
+                                            name="payment_date"
+                                            :default="today()->subDay()->format('Y-m-d')"
                                             required
                                         />
                                     </div>
@@ -160,7 +160,7 @@
                         label="Tarih"
                         type="date"
                         name="payment_date"
-                        :default="today()->format('Y-m-d')"
+                        :default="today()->subDay()->format('Y-m-d')"
                         required
                     />
                 </div>
