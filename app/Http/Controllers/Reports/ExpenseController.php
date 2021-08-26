@@ -24,6 +24,7 @@ class ExpenseController extends Controller
                 })
                 ->sum('price') * -1,
             'employeeExpenses' => User::query()
+                ->with('currentSalary')
                 ->with(['workingDates' => fn ($query) => $query->byDate($selectedDate, 'Y-m')])
                 ->withSum(['payments' => function ($query) use ($selectedDate) {
                     $query->whereMonth('salary_period', $selectedDate)->whereYear('salary_period', $selectedDate);
@@ -33,7 +34,7 @@ class ExpenseController extends Controller
                 ->map(function ($user) use ($selectedDate) {
                     $service = new UserSalaryService($user, $user->workingDates->first(), $selectedDate);
 
-                    return $service->price() - $user->payments->map(fn ($payment) => $payment->price->cents())->sum();
+                    return $service->price() - $user->payments_sum_price;
                 })
                 ->sum(),
         ]);

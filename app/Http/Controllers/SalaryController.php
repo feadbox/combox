@@ -22,6 +22,7 @@ class SalaryController extends Controller
             'dates' => $dateService->dates(),
             'paymentTypes' => PaymentTypeEnum::getAllTitles(),
             'users' => User::query()
+                ->with('currentSalary')
                 ->with(['workingDates' => fn ($query) => $query->byDate($selectedDate, 'Y-m')])
                 ->withSum(['payments' => function ($query) use ($selectedDate) {
                     $query->whereMonth('salary_period', $selectedDate)->whereYear('salary_period', $selectedDate);

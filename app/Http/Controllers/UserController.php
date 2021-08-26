@@ -21,6 +21,7 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $users = User::query()
+            ->with('workingDates')
             ->where(function ($query) use ($request) {
                 filled($request->q) ? $query->search($request->q) : $query->currentlyWorking();
             })
