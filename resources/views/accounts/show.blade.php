@@ -5,7 +5,6 @@
                 <x-tabler::page-header :title="$account->name" :back-route="route('accounts.index', $account->forAccount() ? ['type' => 'account'] : ['type' => 'safe'])">
                     <x-slot name="actions">
                         <div class="btn-list">
-                            <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-buy">Ürün al</button>
                             <a href="{{ route('accounts.edit', $account) }}" class="btn">Düzenle</a>
                             @if (!$account->forBranch() && !$account->is_default)
                                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete">Kalıcı olarak sil</button>
@@ -127,53 +126,4 @@
         </div>
     </div>
     <x-tabler::modal-destroy id="modal-delete" :action="route('accounts.destroy', $account)" />
-    <x-tabler::modal id="modal-buy">
-        <x-tabler::modal-header title="Ürün al" />
-        <div class="modal-body">
-            <form action="{{ route('accounts.products.store', $account) }}" method="post">
-                @csrf
-                <div class="mb-3">
-                    <x-form-select
-                        label="Ürün"
-                        name="product"
-                        :options="$products"
-                        required
-                    />
-                </div>
-                <div class="mb-3">
-                    <x-form-select
-                        label="Şube"
-                        name="branch"
-                        :options="$branches"
-                    />
-                </div>
-                <div class="mb-3">
-                    <x-form-input
-                        label="Adet / KG"
-                        type="number"
-                        step="0.01"
-                        name="quantity"
-                        required
-                    />
-                </div>
-                <div class="mb-3">
-                    <x-form-input
-                        label="Toplam tutar"
-                        name="price"
-                        required
-                    />
-                </div>
-                <div class="mb-3">
-                    <x-form-input
-                        label="Tarih"
-                        type="date"
-                        name="payment_date"
-                        :default="today()->subDay()->format('Y-m-d')"
-                        required
-                    />
-                </div>
-                <x-form-submit />
-            </form>
-        </div>
-    </x-tabler::modal>
 </x-layouts.app>

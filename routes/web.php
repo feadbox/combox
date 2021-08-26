@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountPaymentController;
-use App\Http\Controllers\AccountProductController;
 use App\Http\Controllers\AccountTransferController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\PositionController;
@@ -41,7 +40,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('accounts/transfer', [AccountTransferController::class, 'index'])->name('accounts.transfers.index');
     Route::post('accounts/transfer', [AccountTransferController::class, 'store'])->name('accounts.transfers.store');
-    Route::post('accounts/{account}/products', [AccountProductController::class, 'store'])->name('accounts.products.store');
     Route::resource('accounts.payments', AccountPaymentController::class)->only('store');
     Route::resource('accounts', AccountController::class);
 
