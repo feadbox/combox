@@ -2,7 +2,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
-                <x-tabler::page-header title="Hesaplar">
+                <x-tabler::page-header :title="$title">
                     <x-slot name="actions">
                         <div class="btn-list">
                             <a href="{{ route('accounts.transfers.index') }}" class="btn">Transfer</a>

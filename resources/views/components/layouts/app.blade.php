@@ -44,8 +44,9 @@
                     icon="shield"
                     has-child
                 >
-                    <a href="{{ route('accounts.index', ['type' => 'safe']) }}" class="dropdown-item">Kasalar</a>
-                    <a href="{{ route('accounts.index', ['type' => 'account']) }}" class="dropdown-item">Cari Hesaplar</a>
+                    @foreach ($accountTypes as $key => $type)
+                        <a href="{{ route('accounts.index', ['type' => $key]) }}" class="dropdown-item">{{ $type }}</a>
+                    @endforeach
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
                     label="Raporlar"
@@ -53,8 +54,8 @@
                     icon="report-analytics"
                     has-child
                 >
-                    <a href="{{ route('reports.products.index') }}" class="dropdown-item">Ürüne göre</a>
-                    <a href="{{ route('reports.tags.index') }}" class="dropdown-item">Etikete göre</a>
+                    <a href="{{ route('reports.expenses.index') }}" class="dropdown-item">Gider raporu</a>
+                    <a href="{{ route('reports.tags.index') }}" class="dropdown-item">Etiket raporu</a>
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
                     label="Şirket"

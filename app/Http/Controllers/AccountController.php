@@ -14,15 +14,13 @@ class AccountController extends Controller
 {
     public function index(Request $request): View
     {
+        $type = (int) $request->input('type', 1);
+
         return view('accounts.index', [
+            'title' => AccountTypeEnum::fromValue($type)->plural_title,
             'accounts' => Account::query()
                 ->withSum('payments', 'price')
-                ->whereIn(
-                    'account_type',
-                    $request->type === 'account'
-                        ? [AccountTypeEnum::Account]
-                        : [AccountTypeEnum::Safe, AccountTypeEnum::Branch]
-                )
+                ->where('account_type', $type)
                 ->latest('is_default')
                 ->latest('payments_sum_price')
                 ->paginate(),

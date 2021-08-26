@@ -47,10 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('salaries', [SalaryController::class, 'store'])->name('salaries.store');
 
     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
-        Route::get('products', [Reports\ProductController::class, 'index'])->name('products.index');
-        Route::get('products/{product}', [Reports\ProductController::class, 'show'])->name('products.show');
-
+        Route::get('expenses', [Reports\ExpenseController::class, 'index'])->name('expenses.index');
         Route::get('tags', [Reports\TagController::class, 'index'])->name('tags.index');
-        Route::get('tags/{tag}', [Reports\TagController::class, 'show'])->name('tags.show');
     });
 });
