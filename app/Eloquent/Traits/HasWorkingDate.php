@@ -16,10 +16,11 @@ trait HasWorkingDate
 
     public function currentWorkingDate(): HasOne
     {
-        return $this->hasOne(UserWorkingDate::class)->ofMany(
-            ['start' => 'max'],
-            fn ($query) => $query->whereDate('start', '<=', today())
-        );
+        return $this->hasOne(UserWorkingDate::class)->ofMany(['start' => 'max'], function ($query) {
+            $query->whereDate('start', '<=', today())->where(function ($query) {
+                $query->whereNull('end')->orWhereDate('end', '>', today());
+            });
+        });
     }
 
     public function scopeCurrentlyWorking(Builder $query): Builder

@@ -5,6 +5,10 @@
                 <x-tabler::page-header :title="$user->full_name" :back-route="route('users.index')">
                     <x-slot name="actions">
                         <div class="btn-list">
+                            @if ($user->currentWorkingDate?->end)
+                                <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-start-working-date">İş girişi</button>
+                            @endif
+                            <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-end-working-date">İş çıkışı</button>
                             <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-vacation">İzin ekle</button>
                             <a href="{{ route('users.edit', $user) }}" class="btn">Düzenle</a>
                         </div>
@@ -20,7 +24,7 @@
                                 </div>
                                 <div class="card-body text-center border-bottom">
                                     <div class="text-uppercase small font-weight-bold">İşe başlama tarihi</div>
-                                    <div class="h3 mt-2">{{ $user->currentWorkingDate->start->translatedFormat('j F l, Y') }}</div>
+                                    <div class="h3 mt-2">{{ $user->currentWorkingDate?->start?->translatedFormat('j F l, Y') ?: '-' }}</div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
@@ -121,6 +125,42 @@
                         label="Bitiş tarihi"
                         type="date"
                         name="end"
+                    />
+                </div>
+                <x-form-submit />
+            </form>
+        </div>
+    </x-tabler::modal>
+    <x-tabler::modal id="modal-start-working-date">
+        <x-tabler::modal-header title="İş çıkışı" />
+        <div class="modal-body">
+            <form action="{{ route('users.working-dates.update', $user) }}" method="post">
+                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                    <x-form-input
+                        label="Başlama tarihi"
+                        type="date"
+                        name="start"
+                        :default="today()->format('Y-m-d')"
+                    />
+                </div>
+                <x-form-submit />
+            </form>
+        </div>
+    </x-tabler::modal>
+    <x-tabler::modal id="modal-end-working-date">
+        <x-tabler::modal-header title="İş çıkışı" />
+        <div class="modal-body">
+            <form action="{{ route('users.working-dates.update', $user) }}" method="post">
+                @csrf
+                @method('PUT')
+                <div class="mb-3">
+                    <x-form-input
+                        label="Son çalışma günü"
+                        type="date"
+                        name="end"
+                        :default="today()->format('Y-m-d')"
                     />
                 </div>
                 <x-form-submit />
