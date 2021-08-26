@@ -52,10 +52,12 @@ class AccountController extends Controller
         $products = $account->products()->pluck('title', 'products.id');
 
         $branches = Branch::pluck('name', 'id');
+        $accounts = Account::where('account_type', AccountTypeEnum::Account)->pluck('name', 'id');
 
         return view('accounts.show', compact(
             'account',
             'branches',
+            'accounts',
             'payments',
             'products'
         ));

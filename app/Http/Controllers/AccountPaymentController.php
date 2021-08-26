@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAccountPaymentRequest;
 use App\Models\Account;
+use App\Models\AccountPayment;
 use Feadbox\Tags\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 
@@ -11,7 +12,14 @@ class AccountPaymentController extends Controller
 {
     public function store(StoreAccountPaymentRequest $request, Account $account): RedirectResponse
     {
-        $payment = $account->payments()->create($request->validated());
+        $payment = new AccountPayment($request->validated());
+        $payment->account()->associate($account);
+
+        if ($request->relation) {
+            $payment->relation()->associate(Account::find($request->relation));
+        }
+
+        $payment->save();
 
         $tags = explode(',', $request->tags);
 

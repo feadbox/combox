@@ -34,6 +34,13 @@
                                         />
                                     </div>
                                     <div class="mb-3">
+                                        <x-form-select
+                                            label="Cari"
+                                            name="relation"
+                                            :options="$accounts"
+                                        />
+                                    </div>
+                                    <div class="mb-3">
                                         <x-form-textarea
                                             label="Açıklama"
                                             name="description"
@@ -70,7 +77,7 @@
                                             <th>Tutar</th>
                                             <th>Açıklama</th>
                                             <th>Şube</th>
-                                            <th>Ürün</th>
+                                            <th>Cari</th>
                                             <th>Personel</th>
                                             <th>Etiketler</th>
                                             <th>Tarih</th>
@@ -85,9 +92,8 @@
                                                 </td>
                                                 <td>{{ $payment->branch->name ?? '-' }}</td>
                                                 <td>
-                                                    @if ($payment->relation instanceof App\Models\Product)
-                                                        {{ $payment->relation->title }}
-                                                        ({{ $payment->quantity }} {{ $payment->relation->unit->title }})
+                                                    @if ($payment->relation instanceof App\Models\Account)
+                                                        {{ $payment->relation->name }}
                                                     @else
                                                         -
                                                     @endif

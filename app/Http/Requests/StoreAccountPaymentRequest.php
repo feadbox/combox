@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Eloquent\Enums\AccountTypeEnum;
+use App\Models\Account;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAccountPaymentRequest extends FormRequest
 {
@@ -24,9 +27,10 @@ class StoreAccountPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'price' => ['required', 'numeric'],
             'tags' => ['required', 'string', 'max:191'],
+            'relation' => ['required', Rule::exists(Account::class, 'id')->where('account_type', AccountTypeEnum::Account)],
             'description' => ['nullable', 'string', 'max:500'],
+            'price' => ['required', 'numeric'],
             'payment_date' => ['required', 'date'],
         ];
     }
