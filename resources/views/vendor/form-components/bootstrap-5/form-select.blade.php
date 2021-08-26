@@ -27,7 +27,15 @@
         <option value="">@lang('Bir öğe seçin')</option>
     @endif
     @forelse($options as $key => $option)
-        <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>{{ $option }}</option>
+        @if (is_array($option) || $option instanceof \Illuminate\Support\Collection)
+            <optgroup label="{{ $key }}">
+                @foreach ($option as $childKey => $childOption)
+                    <option value="{{ $childKey }}" @if($isSelected($childKey)) selected="selected" @endif>{{ $childOption }}</option>
+                @endforeach
+            </optgroup>
+        @else
+            <option value="{{ $key }}" @if($isSelected($key)) selected="selected" @endif>{{ $option }}</option>
+        @endif
     @empty
         {!! $slot !!}
     @endforelse
