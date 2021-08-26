@@ -6,15 +6,15 @@
                 <div class="page-body">
                     <form action="{{ route('accounts.store') }}" method="post">
                         @csrf
-                        <div class="card card-body">
-                            <div class="mb-3">
-                                <x-form-input
-                                    label="Hesap adı"
-                                    name="name"
-                                    autofocus
-                                />
-                            </div>
-                            <div class="mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <x-form-input
+                                        label="Hesap adı"
+                                        name="name"
+                                        autofocus
+                                    />
+                                </div>
                                 <x-form-select
                                     label="Hesap Türü"
                                     name="account_type"
@@ -22,7 +22,19 @@
                                     :options="[1 => 'Kasa', 2 => 'Cari Hesap']"
                                 />
                             </div>
-                            <div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <x-form-input
+                                        label="Telefon numarası"
+                                        name="phone"
+                                    />
+                                </div>
+                                <x-form-input
+                                    label="e-Posta adresi"
+                                    name="email"
+                                />
+                            </div>
+                            <div class="card-body">
                                 <x-form-submit />
                             </div>
                         </div>

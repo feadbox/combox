@@ -18,6 +18,7 @@ class CreateAccountsTable extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->text('description')->nullable();
             $table->integer('account_type');
             $table->nullableMorphs('accountable');
             $table->boolean('is_default')->default(false);

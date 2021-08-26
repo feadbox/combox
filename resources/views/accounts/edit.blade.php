@@ -7,17 +7,17 @@
                     <form action="{{ route('accounts.update', $account) }}" method="post">
                         @csrf
                         @method('PUT')
-                        <div class="card card-body">
-                            <div class="mb-3">
-                                <x-form-input
-                                    label="Hesap adı"
-                                    name="name"
-                                    :default="$account->name"
-                                    :readonly="$account->forBranch()"
-                                    autofocus
-                                />
-                            </div>
-                            <div class="mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <x-form-input
+                                        label="Hesap adı"
+                                        name="name"
+                                        :default="$account->name"
+                                        :readonly="$account->forBranch()"
+                                        autofocus
+                                    />
+                                </div>
                                 <x-form-select
                                     label="Hesap Türü"
                                     name="account_type"
@@ -25,7 +25,21 @@
                                     :options="$accountTypes"
                                 />
                             </div>
-                            <div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <x-form-input
+                                        label="Telefon numarası"
+                                        name="phone"
+                                        :default="$account->phone"
+                                    />
+                                </div>
+                                <x-form-input
+                                    label="e-Posta adresi"
+                                    name="email"
+                                    :default="$account->email"
+                                />
+                            </div>
+                            <div class="card-body">
                                 <x-form-submit />
                             </div>
                         </div>
