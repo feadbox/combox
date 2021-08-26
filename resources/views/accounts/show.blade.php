@@ -2,7 +2,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
-                <x-tabler::page-header :title="$account->name" :back-route="route('accounts.index', $account->forAccount() ? ['type' => 'account'] : ['type' => 'safe'])">
+                <x-tabler::page-header :title="$account->name" :back-route="route('accounts.index', ['type' => $account->account_type->value])">
                     <x-slot name="actions">
                         <div class="btn-list">
                             <a href="{{ route('accounts.edit', $account) }}" class="btn">Düzenle</a>
