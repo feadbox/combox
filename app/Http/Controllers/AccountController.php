@@ -39,9 +39,9 @@ class AccountController extends Controller
 
     public function store(StoreAccountRequest $request): RedirectResponse
     {
-        Account::create($request->validated());
+        $account = Account::create($request->validated());
 
-        return redirect()->route('accounts.index');
+        return redirect()->route('accounts.show', $account);
     }
 
     public function show(Account $account): View
