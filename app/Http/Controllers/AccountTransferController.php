@@ -24,11 +24,13 @@ class AccountTransferController extends Controller
         $from->payments()->create([
             'price' => -$request->price,
             'payment_date' => $request->payment_date,
+            'description' => $description = "{$from->name} -> {$to->name}"
         ]);
 
         $to->payments()->create([
             'price' => $request->price,
             'payment_date' => $request->payment_date,
+            'description' => $description,
         ]);
 
         return redirect()->route('accounts.transfers.index');
