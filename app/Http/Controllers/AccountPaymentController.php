@@ -21,12 +21,15 @@ class AccountPaymentController extends Controller
 
         $payment->save();
 
-        $tags = explode(',', $request->tags);
+        $tags = json_decode($request->tags);
 
         foreach ($tags as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag, 'collection' => 'account-payment']);
+            $savedTag = Tag::firstOrCreate([
+                'name' => $tag->value,
+                'collection' => 'account-payment'
+            ]);
 
-            $payment->tags()->attach($tag);
+            $payment->tags()->attach($savedTag);
         }
 
         return redirect()->route('accounts.show', $account);

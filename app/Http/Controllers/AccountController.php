@@ -6,6 +6,7 @@ use App\Eloquent\Enums\AccountTypeEnum;
 use App\Http\Requests\StoreAccountRequest;
 use App\Models\Branch;
 use App\Models\Account;
+use Feadbox\Tags\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -52,12 +53,15 @@ class AccountController extends Controller
         $branches = Branch::pluck('name', 'id');
         $accounts = Account::where('account_type', AccountTypeEnum::Account)->pluck('name', 'id');
 
+        $tags = Tag::where('collection', 'account-payment')->pluck('name');
+
         return view('accounts.show', compact(
             'account',
             'branches',
             'accounts',
             'payments',
-            'products'
+            'products',
+            'tags'
         ));
     }
 

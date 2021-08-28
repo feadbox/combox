@@ -19,6 +19,7 @@
         "sass-loader": "^12.1.0"
     },
     "dependencies": {
-        "@tabler/core": "*"
+        "@tabler/core": "*",
+        "@yaireo/tagify": "^4.7.2"
     }
 }

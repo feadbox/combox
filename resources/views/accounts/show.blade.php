@@ -1,4 +1,20 @@
 <x-layouts.app>
+    <x-slot name="scripts">
+        <script>
+            const input = document.querySelector('.form-tags');
+
+            new Tagify(input, {
+                whitelist: @json($tags),
+                maxTags: 10,
+                dropdown: {
+                    maxItems: 20,
+                    classname: "tags-look",
+                    enabled: 0,
+                    closeOnSelect: false
+                }
+            });
+        </script>
+    </x-slot>
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
@@ -28,6 +44,7 @@
                                     <div class="mb-3">
                                         <x-form-input
                                             label="Etiketler"
+                                            class="form-tags"
                                             name="tags"
                                             required
                                         />

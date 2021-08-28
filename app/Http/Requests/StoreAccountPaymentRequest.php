@@ -27,8 +27,8 @@ class StoreAccountPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'tags' => ['required', 'string', 'max:191'],
-            'relation' => ['required', Rule::exists(Account::class, 'id')->where('account_type', AccountTypeEnum::Account)],
+            'tags' => ['required', 'string', 'max:500'],
+            'relation' => ['nullable', Rule::exists(Account::class, 'id')->where('account_type', AccountTypeEnum::Account)],
             'description' => ['nullable', 'string', 'max:500'],
             'price' => ['required', 'numeric'],
             'payment_date' => ['required', 'date'],
