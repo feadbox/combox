@@ -25,7 +25,7 @@
                                 <x-form-select
                                     label="Koleksiyon"
                                     name="collection"
-                                    :options="['product' => 'Ürün']"
+                                    :options="['product' => 'Ürün', 'account-payment' => 'Hesap Ödemesi']"
                                     :default="$tag->collection"
                                 />
                             </div>
