@@ -31,6 +31,11 @@ class DatabaseSeeder extends Seeder
             'is_default' => true
         ]);
 
+        Account::create([
+            'name' => 'TIP',
+            'account_type' => AccountTypeEnum::Tip,
+        ]);
+
         // $this->call(TestSeeder::class);
     }
 }
