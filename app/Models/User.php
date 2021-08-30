@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Eloquent\Enums\AccountTypeEnum;
 use App\Eloquent\Enums\PaymentTypeEnum;
 use App\Eloquent\Traits\HasWorkingDate;
 use Feadbox\Activities\Eloquent\Traits\HasActivities;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,6 +49,14 @@ class User extends Authenticatable
     public function payments(): HasMany
     {
         return $this->hasMany(UserPayment::class);
+    }
+
+    public function tipPayments(): MorphMany
+    {
+        return $this->morphMany(AccountPayment::class, 'relation')
+            ->whereHas('account', function (Builder $query) {
+                $query->where('account_type', AccountTypeEnum::Tip);
+            });
     }
 
     public function salaries(): HasMany

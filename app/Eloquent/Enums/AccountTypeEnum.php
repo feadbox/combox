@@ -10,6 +10,7 @@ final class AccountTypeEnum extends Enum
     const Account = 2;
     const Branch = 3;
     const Employee = 4;
+    const Tip = 5;
 
     public static function getTitleAttribute($value): string
     {
@@ -18,6 +19,7 @@ final class AccountTypeEnum extends Enum
             self::Account => 'Cari Hesap',
             self::Branch => 'Şube',
             self::Employee => 'Personel',
+            self::Tip => 'Bahşiş',
         };
     }
 
@@ -26,8 +28,9 @@ final class AccountTypeEnum extends Enum
         return match ($value) {
             self::Safe => 'Kasalar',
             self::Account => 'Cari Hesaplar',
-            self::Branch => 'Şubeler',
-            self::Employee => 'Personeller',
+            self::Branch => 'Şube Hesapları',
+            self::Employee => 'Personel Hesapları',
+            self::Tip => 'Bahşiş Hesapları',
         };
     }
 }

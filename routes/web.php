@@ -10,6 +10,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Reports;
+use App\Http\Controllers\TipController;
 use App\Http\Controllers\UserVacationController;
 use App\Http\Controllers\UserWorkingDateController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('salaries', [SalaryController::class, 'index'])->name('salaries.index');
     Route::post('salaries', [SalaryController::class, 'store'])->name('salaries.store');
+
+    Route::get('tips', [TipController::class, 'index'])->name('tips.index');
+    Route::post('tips', [TipController::class, 'store'])->name('tips.store');
 
     Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
         Route::get('expenses', [Reports\ExpenseController::class, 'index'])->name('expenses.index');

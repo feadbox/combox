@@ -118,6 +118,8 @@
                                                     @if ($payment->relation instanceof App\Models\UserPayment)
                                                         {{ $payment->relation->user->full_name }}
                                                         ({{ $payment->relation->type->title }})
+                                                    @elseif ($payment->relation instanceof App\Models\User)
+                                                        {{ $payment->relation->full_name }}
                                                     @else
                                                         -
                                                     @endif

@@ -13,11 +13,11 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-lg-8 offset-lg-2">
-                <x-tabler::page-header title="Maaşlar" />
+                <x-tabler::page-header title="Tip" />
                 <div class="page-body">
                     <div class="card card-table">
                         <div class="card-header">
-                            <form class="w-full" action="{{ route('salaries.index') }}">
+                            <form class="w-full" action="{{ route('tips.index') }}">
                                 <x-form-select
                                     name="date"
                                     :options="$dates"
@@ -31,7 +31,6 @@
                                 <tr>
                                     <th>Çalışan</th>
                                     <th>Çalıştığı gün sayısı</th>
-                                    <th>Hakediş gün sayısı</th>
                                     <th>Hakediş</th>
                                     <th>Ödenen</th>
                                     <th>Kalan</th>
@@ -42,11 +41,10 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->full_name }}</td>
-                                        <td>{{ $user->service->workingDays() }}</td>
-                                        <td>{{ $user->service->paidDays() }}</td>
-                                        <td>{{ Money::format($price = $user->service->price()) }}</td>
-                                        <td>{{ Money::format($user->payments_sum_price) }}</td>
-                                        <td>{{ Money::format($price - $user->payments_sum_price) }}</td>
+                                        <td>{{ $days = $user->service->workingDays() }}</td>
+                                        <td>{{ Money::format($tip = Money::convertToCents(floor(Money::convertFromCents($tipPriceByDays * $days)))) }}</td>
+                                        <td>{{ Money::format($payed = $user->tip_payments_sum_price * -1) }}</td>
+                                        <td>{{ Money::format($tip - $payed) }}</td>
                                         <td class="text-end">
                                             <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-payment" data-id="{{ $user->id }}">Ödeme yap</button>
                                         </td>
@@ -62,23 +60,15 @@
     <x-tabler::modal id="modal-payment">
         <x-tabler::modal-header title="Ödeme yap" />
         <div class="modal-body">
-            <form action="{{ route('salaries.store') }}" method="post">
+            <form action="{{ route('tips.store') }}" method="post">
                 @csrf
                 <input type="hidden" name="user">
                 <div class="mb-3">
                     <x-form-select
-                        label="Maaş dönemi"
-                        name="salary_period"
+                        label="Tip dönemi"
+                        name="period"
                         :options="$dates"
                         :default="$selectedDate->format('Y-m')"
-                        required
-                    />
-                </div>
-                <div class="mb-3">
-                    <x-form-select
-                        label="Ödeme tipi"
-                        name="type"
-                        :options="$paymentTypes"
                         required
                     />
                 </div>

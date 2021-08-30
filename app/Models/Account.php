@@ -49,6 +49,11 @@ class Account extends Model
         return $query->where('is_default', true);
     }
 
+    public function scopeTip(Builder $query): Builder
+    {
+        return $query->where('account_type', AccountTypeEnum::Tip);
+    }
+
     public function total(): int
     {
         return $this->payments_sum_price ?: 0;

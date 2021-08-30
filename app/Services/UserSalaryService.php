@@ -17,6 +17,10 @@ class UserSalaryService
 
     protected $paidDays;
 
+    protected $workingDays;
+
+    protected bool $calculated = false;
+
     public function __construct(
         protected User $user,
         protected UserWorkingDate $workingDate,
@@ -37,16 +41,23 @@ class UserSalaryService
 
     public function price(): float
     {
-        $this->salary();
+        $this->calculateDays();
 
         return $this->price;
     }
 
     public function paidDays(): int
     {
-        $this->salary();
+        $this->calculateDays();
 
         return $this->paidDays;
+    }
+
+    public function workingDays(): int
+    {
+        $this->calculateDays();
+
+        return $this->workingDays;
     }
 
     public function isStartOfWork(): bool
@@ -98,33 +109,40 @@ class UserSalaryService
         });
     }
 
-    protected function salary(): void
+    protected function calculateDays(): void
     {
-        if ($this->price) {
+        if ($this->calculated) {
             return;
         }
 
         $paidDays = 30;
+        $workingDays = 30;
 
         if ($this->startedAt->isCurrentMonth()) {
             $paidDays = $this->isEndOfWork() ? $this->workingDate->end->day : today()->subDay()->day;
+            $workingDays = $paidDays;
         } elseif ($this->isStartOfWork()) {
             $paidDays = $this->workingDate->start->lastOfMonth()->day;
+            $workingDays = $paidDays;
         }
 
         if ($this->isStartOfWork()) {
             $paidDays++;
             $paidDays -= $this->workingDate->start->day;
+            $workingDays = $paidDays;
         }
 
         if (!$this->startedAt->isCurrentMonth() && $this->isEndOfWork()) {
             $paidDays -= 30 - $this->workingDate->end->day;
+            $workingDays = $paidDays;
         }
 
         foreach ($this->vacations() as $vacation) {
             if ($vacation['reason_is_free']) {
                 $paidDays--;
             }
+
+            $workingDays--;
         }
 
         if ($paidDays < 0) {
@@ -135,7 +153,18 @@ class UserSalaryService
             $paidDays = 30;
         }
 
+        if ($workingDays < 0) {
+            $workingDays = 0;
+        }
+
+        if ($workingDays > 30) {
+            $workingDays = 30;
+        }
+
         $this->paidDays = $paidDays;
+        $this->workingDays = $workingDays;
         $this->price = ($this->user->currentSalary->price->cents() / 30) * $paidDays;
+
+        $this->calculated = true;
     }
 }

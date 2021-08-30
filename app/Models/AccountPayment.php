@@ -18,10 +18,12 @@ class AccountPayment extends Model
         'description',
         'quantity',
         'payment_date',
+        'period',
     ];
 
     protected $casts = [
         'payment_date' => 'date',
+        'period' => 'date',
         'price' => MoneyCast::class,
     ];
 

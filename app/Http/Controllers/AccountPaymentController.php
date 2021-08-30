@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAccountPaymentRequest;
 use App\Models\Account;
 use App\Models\AccountPayment;
-use Feadbox\Tags\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 
 class AccountPaymentController extends Controller
 {
     public function store(StoreAccountPaymentRequest $request, Account $account): RedirectResponse
     {
-        $payment = new AccountPayment($request->validated());
+        $payment = new AccountPayment($request->validated() + [
+            'period' => $request->payment_date,
+        ]);
+
         $payment->account()->associate($account);
 
         if ($request->relation) {
@@ -24,12 +26,7 @@ class AccountPaymentController extends Controller
         $tags = json_decode($request->tags);
 
         foreach ($tags as $tag) {
-            $savedTag = Tag::firstOrCreate([
-                'name' => $tag->value,
-                'collection' => 'account-payment'
-            ]);
-
-            $payment->tags()->attach($savedTag);
+            $payment->tag($tag->value, 'account-payment');
         }
 
         return redirect()->route('accounts.show', $account);

@@ -20,7 +20,7 @@
                                     label="Hesap Türü"
                                     name="account_type"
                                     default="2"
-                                    :options="[1 => 'Kasa', 2 => 'Cari Hesap']"
+                                    :options="$accountTypes"
                                 />
                             </div>
                             <div class="card-body">

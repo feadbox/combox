@@ -23,6 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>Çalışan</th>
+                                    <th>Pozisyon</th>
                                     <th>Telefon numarası</th>
                                     <th>Çalışıyor</th>
                                 </tr>
@@ -33,7 +34,8 @@
                                         <td class="has-link">
                                             <a href="{{ $route }}">{{ $user->full_name }}</a>
                                         </td>
-                                        <td>{{ $user->phone }}</td>
+                                        <td>{{ $user->position->name }}</td>
+                                        <td>{{ $user->phone ?: '-' }}</td>
                                         <td>{{ $user->isCurrentlyWork() ? 'Evet' : 'Hayır' }}</td>
                                     </tr>
                                 @endforeach

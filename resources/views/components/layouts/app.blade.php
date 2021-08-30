@@ -59,7 +59,7 @@
                 </x-tabler::nav-item>
                 <x-tabler::nav-item
                     label="Şirket"
-                    :route-is="['branches.*', 'positions.*', 'tags.*', 'users.*', 'products.*', 'salaries.*']"
+                    :route-is="['branches.*', 'positions.*', 'tags.*', 'users.*', 'products.*', 'salaries.*', 'tips.*']"
                     icon="settings"
                     has-child
                 >
@@ -68,8 +68,12 @@
                         <span>Çalışanlar</span>
                     </a>
                     <a href="{{ route('salaries.index') }}" class="dropdown-item">
-                        <x-tabler-coin class="dropdown-item-icon" />
+                        <x-tabler-wallet class="dropdown-item-icon" />
                         <span>Maaşlar</span>
+                    </a>
+                    <a href="{{ route('tips.index') }}" class="dropdown-item">
+                        <x-tabler-coin class="dropdown-item-icon" />
+                        <span>Tip</span>
                     </a>
                     <a href="{{ route('products.index') }}" class="dropdown-item">
                         <x-tabler-barcode class="dropdown-item-icon" />

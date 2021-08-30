@@ -13,9 +13,11 @@ class Position extends Model
     protected $fillable = [
         'name',
         'default_price',
+        'included_to_tip',
     ];
 
     protected $casts = [
         'default_price' => MoneyCast::class,
+        'included_to_tip' => 'boolean',
     ];
 }
