@@ -36,7 +36,9 @@ class PositionController extends Controller
 
     public function update(StorePositionRequest $request, Position $position): RedirectResponse
     {
-        $position->update($request->validated());
+        $position->update($request->validated() + [
+            'included_to_tip' => $request->included_to_tip === '1',
+        ]);
 
         return redirect()->route('positions.index');
     }

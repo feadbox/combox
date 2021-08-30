@@ -26,6 +26,7 @@ class StorePositionRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'default_price' => ['required'],
+            'included_to_tip' => ['nullable', 'boolean'],
         ];
     }
 }
