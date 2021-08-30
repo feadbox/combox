@@ -18,6 +18,8 @@ class Account extends Model
         'name',
         'email',
         'phone',
+        'bank_account_name',
+        'bank_account_iban',
         'account_type',
         'is_default',
     ];

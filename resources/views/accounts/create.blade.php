@@ -8,6 +8,7 @@
                         @csrf
                         <div class="card">
                             <div class="card-body">
+                                <h3 class="card-title">Genel</h3>
                                 <div class="mb-3">
                                     <x-form-input
                                         label="Hesap adı"
@@ -23,6 +24,20 @@
                                 />
                             </div>
                             <div class="card-body">
+                                <h3 class="card-title">Banka</h3>
+                                <div class="mb-3">
+                                    <x-form-input
+                                        label="Hesap adı"
+                                        name="bank_account_name"
+                                    />
+                                </div>
+                                <x-form-input
+                                    label="IBAN"
+                                    name="bank_account_iban"
+                                />
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">İletişim</h3>
                                 <div class="mb-3">
                                     <x-form-input
                                         label="Telefon numarası"

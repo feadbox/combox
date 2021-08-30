@@ -28,6 +28,8 @@ class StoreAccountRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:191'],
             'account_type' => ['required', Rule::in(AccountTypeEnum::getValues())],
+            'bank_account_name' => ['nullable', 'string', 'max:191'],
+            'bank_account_iban' => ['nullable', 'string', 'max:191'],
             'email' => ['nullable', 'string', 'email', 'max:191'],
             'phone' => ['nullable', 'string', 'max:191'],
         ];
