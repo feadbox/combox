@@ -25,6 +25,11 @@
                                     label="Tip hesabına dahil mi?"
                                     name="included_to_tip"
                                 />
+                                <x-form-input
+                                    label="Tip puanı"
+                                    type="number"
+                                    name="tip_point"
+                                />
                             </div>
                             <div>
                                 <x-form-submit />

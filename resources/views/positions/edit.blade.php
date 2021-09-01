@@ -29,12 +29,17 @@
                                     :default="$position->default_price->withoutPrefix()"
                                 />
                             </div>
-
                             <div class="mb-3">
                                 <x-form-checkbox
                                     label="Tip hesabına dahil mi?"
                                     name="included_to_tip"
                                     :default="$position->included_to_tip"
+                                />
+                                <x-form-input
+                                    label="Tip puanı"
+                                    type="number"
+                                    name="tip_point"
+                                    :default="$position->tip_point"
                                 />
                             </div>
                             <div>

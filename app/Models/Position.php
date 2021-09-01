@@ -14,6 +14,7 @@ class Position extends Model
         'name',
         'default_price',
         'included_to_tip',
+        'tip_point',
     ];
 
     protected $casts = [
