@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>Çalışan</th>
                                     <th>Çalıştığı gün sayısı</th>
+                                    <th>Puan</th>
                                     <th>Hakediş</th>
                                     <th>Ödenen</th>
                                     <th>Kalan</th>
@@ -41,8 +42,9 @@
                                 @foreach ($users as $user)
                                     <tr>
                                         <td>{{ $user->full_name }}</td>
-                                        <td>{{ $days = $user->service->workingDays() }}</td>
-                                        <td>{{ Money::format($tip = Money::convertToCents(floor(Money::convertFromCents($tipPriceByDays * $days)))) }}</td>
+                                        <td>{{ $days = $user->salaryService($selectedDate)->paidDays() }}</td>
+                                        <td>{{ $user->position->tip_point ?: 0 }}</td>
+                                        <td>{{ Money::format($tip = Money::convertToCents(floor(Money::convertFromCents($tipPriceByDays * ($days + $user->position->tip_point))))) }}</td>
                                         <td>{{ Money::format($payed = $user->tip_payments_sum_price * -1) }}</td>
                                         <td>{{ Money::format($tip - $payed) }}</td>
                                         <td class="text-end">

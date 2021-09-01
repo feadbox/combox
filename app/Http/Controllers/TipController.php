@@ -32,26 +32,25 @@ class TipController extends Controller
             ->first();
 
         $users = User::query()
-            ->with(['workingDates' => fn ($query) => $query->byDate($selectedDate, 'Y-m')])
+            ->with([
+                'workingDates' => fn ($query) => $query->byDate($selectedDate, 'Y-m'),
+                'position:id,tip_point'
+            ])
             ->withSum(['tipPayments' => function ($query) use ($selectedDate) {
                 $query->whereMonth('period', $selectedDate)->whereYear('period', $selectedDate);
             }], 'price')
             ->whereHas('workingDates', fn ($query) => $query->byDate($selectedDate, 'Y-m'))
             ->whereIn('position_id', Position::where('included_to_tip', true)->pluck('id'))
             ->get()
-            ->map(function ($user) use ($selectedDate) {
-                $user->service = new UserSalaryService($user, $user->workingDates->first(), $selectedDate);
+            ->filter(fn ($user) => $user->salaryService($selectedDate)->paidDays() >= 15);
 
-                return $user;
-            });
-
-        $totalWorkingDays = $users->map->service->sum->workingDays();
+        $totalDays = $users->map->salaryService($selectedDate)->sum->paidDays() + $users->map->position->sum->tip_point;
 
         return view('tips.index', [
             'selectedDate' => $selectedDate,
             'dates' => $dateService->dates(),
             'users' => $users,
-            'tipPriceByDays' => $totalWorkingDays === 0 ? 0 : ($tipAccount->payments_sum_price / $totalWorkingDays),
+            'tipPriceByDays' => $totalDays === 0 ? 0 : ($tipAccount->payments_sum_price / $totalDays),
         ]);
     }
 

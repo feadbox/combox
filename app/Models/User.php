@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Eloquent\Enums\AccountTypeEnum;
 use App\Eloquent\Enums\PaymentTypeEnum;
 use App\Eloquent\Traits\HasWorkingDate;
+use App\Services\UserSalaryService;
+use Carbon\Carbon;
 use Feadbox\Activities\Eloquent\Traits\HasActivities;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -86,5 +88,10 @@ class User extends Authenticatable
     {
         return $query->where('first_name', 'like', "%{$search}%")
             ->orWhere('last_name', 'like', "%{$search}%");
+    }
+
+    public function salaryService(Carbon $selectedDate): UserSalaryService
+    {
+        return new UserSalaryService($this, $this->workingDates->first(), $selectedDate);
     }
 }
