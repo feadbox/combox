@@ -46,9 +46,11 @@
                                         <td>{{ $user->service->paidDays() }}</td>
                                         <td>{{ Money::format($price = $user->service->price()) }}</td>
                                         <td>{{ Money::format($user->payments_sum_price) }}</td>
-                                        <td>{{ Money::format($price - $user->payments_sum_price) }}</td>
+                                        <td>{{ Money::format($remaining = $price - $user->payments_sum_price) }}</td>
                                         <td class="text-end">
-                                            <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-payment" data-id="{{ $user->id }}">Ödeme yap</button>
+                                            @if ($remaining > 0)
+                                                <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-payment" data-id="{{ $user->id }}">Ödeme yap</button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach
