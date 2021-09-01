@@ -118,9 +118,13 @@ class UserSalaryService
         $paidDays = 30;
         $workingDays = 30;
 
+        if ($this->isEndOfWork()) {
+            $lastDay = $this->workingDate->end->day > 30 ? 30 : $this->workingDate->end->day;
+        }
+
         if ($this->startedAt->isCurrentMonth()) {
             if ($this->isEndOfWork()) {
-                $paidDays = $this->workingDate->end->day;
+                $paidDays = $lastDay;
             } else {
                 $paidDays = !($subDay = today()->subDay())->isLastMonth() ? $subDay->day : 0;
             }
@@ -138,7 +142,7 @@ class UserSalaryService
         }
 
         if (!$this->startedAt->isCurrentMonth() && $this->isEndOfWork()) {
-            $paidDays -= 30 - $this->workingDate->end->day;
+            $paidDays -= 30 - $lastDay;
             $workingDays = $paidDays;
         }
 
