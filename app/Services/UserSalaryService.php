@@ -24,14 +24,14 @@ class UserSalaryService
     public function __construct(
         protected User $user,
         protected UserWorkingDate $workingDate,
-        protected Carbon $startedAt
+        protected Carbon $period
     ) {
         //
     }
 
-    public function startedAt(): Carbon
+    public function period(): Carbon
     {
-        return $this->startedAt;
+        return $this->period;
     }
 
     public function workingDate(): UserWorkingDate
@@ -62,12 +62,12 @@ class UserSalaryService
 
     public function isStartOfWork(): bool
     {
-        return $this->startedAt->isSameMonth($this->workingDate->start);
+        return $this->period->isSameMonth($this->workingDate->start);
     }
 
     public function isEndOfWork(): bool
     {
-        return $this->workingDate->end && $this->startedAt->isSameMonth($this->workingDate->end);
+        return $this->workingDate->end && $this->period->isSameMonth($this->workingDate->end);
     }
 
     public function vacations(): Collection
@@ -77,17 +77,17 @@ class UserSalaryService
         }
 
         $vacations = $this->user->vacations()
-            ->whereYear('start', $this->startedAt->year)
-            ->whereMonth('start', $this->startedAt->month)
+            ->whereYear('start', $this->period->year)
+            ->whereMonth('start', $this->period->month)
             ->get();
 
         $collection = collect();
 
         foreach ($vacations as $vacation) {
             if ($vacation->end) {
-                foreach ($vacation->start->toPeriod($vacation->end, '1 day') as $startedAt) {
+                foreach ($vacation->start->toPeriod($vacation->end, '1 day') as $period) {
                     $collection->push([
-                        'start' => $startedAt,
+                        'start' => $period,
                         'reason_title' => $vacation->reason->title,
                         'reason_is_free' => !$vacation->reason->isPaid,
                     ]);
@@ -104,8 +104,8 @@ class UserSalaryService
         }
 
         return $this->vacations = $collection->filter(function ($vacation) {
-            return $vacation['start']->month === $this->startedAt->month
-                && $vacation['start']->year === $this->startedAt->year;
+            return $vacation['start']->month === $this->period->month
+                && $vacation['start']->year === $this->period->year;
         });
     }
 
@@ -119,18 +119,18 @@ class UserSalaryService
 
         if ($this->isEndOfWork()) {
             $lastDay = $this->workingDate->end->day > 30 ? 30 : $this->workingDate->end->day;
-        } else if ($this->startedAt->isCurrentMonth()) {
+        } else if ($this->period->isCurrentMonth()) {
             $paidDays = !($subDay = today()->subDay())->isLastMonth() ? $subDay->day : 0;
         } else if ($this->isStartOfWork()) {
             $paidDays = $this->workingDate->start->lastOfMonth()->day;
         }
 
         if ($this->isStartOfWork() && $this->isEndOfWork()) {
-            $paidDays = $this->startedAt->diffInDays($this->workingDate->end) + 1;
+            $paidDays = $this->workingDate->start->diffInDays($this->workingDate->end) + 1;
         } else if ($this->isEndOfWork()) {
             $paidDays = $lastDay;
         } else if ($this->isStartOfWork()) {
-            $paidDays -= $this->startedAt->day - 1;
+            $paidDays -= $this->period->day - 1;
         }
 
         $workingDays = $paidDays;
