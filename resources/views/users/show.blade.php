@@ -5,7 +5,7 @@
                 <x-tabler::page-header :title="$user->full_name" :back-route="route('users.index')">
                     <x-slot name="actions">
                         <div class="btn-list">
-                            @if ($user->currentWorkingDate?->end)
+                            @if (!$user->isCurrentlyWork())
                                 <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-start-working-date">İş girişi</button>
                             @endif
                             <button class="btn" data-bs-toggle="modal" data-bs-target="#modal-end-working-date">İş çıkışı</button>
@@ -132,7 +132,7 @@
         </div>
     </x-tabler::modal>
     <x-tabler::modal id="modal-start-working-date">
-        <x-tabler::modal-header title="İş çıkışı" />
+        <x-tabler::modal-header title="İş girişi" />
         <div class="modal-body">
             <form action="{{ route('users.working-dates.update', $user) }}" method="post">
                 @csrf

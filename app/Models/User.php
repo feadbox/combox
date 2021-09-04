@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Eloquent\Enums\AccountTypeEnum;
-use App\Eloquent\Enums\PaymentTypeEnum;
 use App\Eloquent\Traits\HasWorkingDate;
 use App\Services\UserSalaryService;
 use Carbon\Carbon;
