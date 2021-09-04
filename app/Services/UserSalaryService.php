@@ -116,35 +116,24 @@ class UserSalaryService
         }
 
         $paidDays = 30;
-        $workingDays = 30;
 
         if ($this->isEndOfWork()) {
             $lastDay = $this->workingDate->end->day > 30 ? 30 : $this->workingDate->end->day;
-        }
-
-        if ($this->startedAt->isCurrentMonth()) {
-            if ($this->isEndOfWork()) {
-                $paidDays = $lastDay;
-            } else {
-                $paidDays = !($subDay = today()->subDay())->isLastMonth() ? $subDay->day : 0;
-            }
-
-            $workingDays = $paidDays;
-        } elseif ($this->isStartOfWork()) {
+        } else if ($this->startedAt->isCurrentMonth()) {
+            $paidDays = !($subDay = today()->subDay())->isLastMonth() ? $subDay->day : 0;
+        } else if ($this->isStartOfWork()) {
             $paidDays = $this->workingDate->start->lastOfMonth()->day;
-            $workingDays = $paidDays;
         }
 
-        if ($this->isStartOfWork()) {
-            $paidDays++;
-            $paidDays -= $this->workingDate->start->day;
-            $workingDays = $paidDays;
+        if ($this->isStartOfWork() && $this->isEndOfWork()) {
+            $paidDays = $this->startedAt->diffInDays($this->workingDate->end) + 1;
+        } else if ($this->isEndOfWork()) {
+            $paidDays = $lastDay;
+        } else if ($this->isStartOfWork()) {
+            $paidDays -= $this->startedAt->day - 1;
         }
 
-        if (!$this->startedAt->isCurrentMonth() && $this->isEndOfWork()) {
-            $paidDays -= 30 - $lastDay;
-            $workingDays = $paidDays;
-        }
+        $workingDays = $paidDays;
 
         foreach ($this->vacations() as $vacation) {
             if ($vacation['reason_is_free']) {

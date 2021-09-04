@@ -9,7 +9,7 @@ class UserWorkingDateController extends Controller
 {
     public function update(UpdateUserWorkingDateRequest $request, User $user)
     {
-        if ($user->currentWorkingDate->end && $request->has('start')) {
+        if (!$user->isCurrentlyWork() && $request->has('start')) {
             $user->workingDates()->create($request->validated());
         } else {
             $user->currentWorkingDate->update($request->validated());
