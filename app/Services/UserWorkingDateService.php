@@ -22,7 +22,7 @@ class UserWorkingDateService
             }
 
             $startedAtNextMonthDoesntExists = $dates->filter(function ($date) use ($workingDate) {
-                return $date->startedAt()->format('Y-m') === $workingDate->start->addMonth()->format('Y-m');
+                return $date->period()->format('Y-m') === $workingDate->start->addMonth()->format('Y-m');
             })->count() === 0;
 
             if ($startedAtNextMonthDoesntExists && ($workingDate->end && $workingDate->end->isFuture())) {
@@ -30,7 +30,7 @@ class UserWorkingDateService
             }
 
             $endedAtMonthDoesntExists = $dates->filter(function ($date) use ($workingDate) {
-                return $date->startedAt()->format('Y-m') === $workingDate->endedAtOrToday()->format('Y-m');
+                return $date->period()->format('Y-m') === $workingDate->endedAtOrToday()->format('Y-m');
             })->count() === 0;
 
             if ($endedAtMonthDoesntExists) {

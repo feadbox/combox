@@ -115,22 +115,20 @@ class UserSalaryService
             return;
         }
 
-        $paidDays = 30;
-
-        if ($this->isEndOfWork()) {
-            $lastDay = $this->workingDate->end->day > 30 ? 30 : $this->workingDate->end->day;
+        if ($this->isStartOfWork() && $this->isEndOfWork()) {
+            $paidDays = $this->workingDate->start->diffInDays($this->workingDate->end) + 1;
+        } else if ($this->isEndOfWork()) {
+            $paidDays = $this->workingDate->end->day > 30 ? 30 : $this->workingDate->end->day;
         } else if ($this->period->isCurrentMonth()) {
             $paidDays = !($subDay = today()->subDay())->isLastMonth() ? $subDay->day : 0;
         } else if ($this->isStartOfWork()) {
             $paidDays = $this->workingDate->start->lastOfMonth()->day;
+        } else {
+            $paidDays = 30;
         }
 
-        if ($this->isStartOfWork() && $this->isEndOfWork()) {
-            $paidDays = $this->workingDate->start->diffInDays($this->workingDate->end) + 1;
-        } else if ($this->isEndOfWork()) {
-            $paidDays = $lastDay;
-        } else if ($this->isStartOfWork()) {
-            $paidDays -= $this->period->day - 1;
+        if ($this->isStartOfWork() && !$this->isEndOfWork()) {
+            $paidDays -= $this->workingDate->start->day - 1;
         }
 
         $workingDays = $paidDays;

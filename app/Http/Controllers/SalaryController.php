@@ -32,8 +32,6 @@ class SalaryController extends Controller
                 ->map(function ($user) use ($selectedDate) {
                     $user->service = new UserSalaryService($user, $user->workingDates->first(), $selectedDate);
 
-                    dd($sele);
-
                     return $user;
                 })
         ]);

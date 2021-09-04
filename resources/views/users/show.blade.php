@@ -54,7 +54,7 @@
                             @foreach ($period as $salaryService)
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        <h3 class="card-title">{{ $salaryService->startedAt()->translatedFormat('F, Y') }}</h3>
+                                        <h3 class="card-title">{{ $salaryService->period()->translatedFormat('F, Y') }}</h3>
                                     </div>
                                     <div class="card-table table-responsive">
                                         <table class="table">
@@ -64,7 +64,7 @@
                                                         <td>
                                                             <span class="text-success">İşe başladı</span>
                                                         </td>
-                                                        <td class="text-end">{{ $salaryService->startedAt()->day }}</td>
+                                                        <td class="text-end">{{ $salaryService->period()->day }}</td>
                                                     </tr>
                                                 @endif
                                                 @foreach ($salaryService->vacations() as $vacation)
